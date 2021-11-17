@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAMES HERE"
+title: "btc strategy visualization"
+author: "Boquan Sun, Zonghan Yue and Wen Zhan"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
