@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>YOUR TITLE HERE</title>
-  <meta name="description" content="YOUR TITLE HERE" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <title>BTC strategy visualization</title>
+  <meta name="description" content="BTC strategy visualization" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="YOUR TITLE HERE" />
+  <meta property="og:title" content="BTC strategy visualization" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,15 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="YOUR TITLE HERE" />
+  <meta name="twitter:title" content="BTC strategy visualization" />
   
   
   
 
-<meta name="author" content="YOUR NAMES HERE" />
+<meta name="author" content="Boquan Sun, Zonghan Yue and Wen Zhan" />
 
 
-<meta name="date" content="2020-11-09" />
+<meta name="date" content="2021-12-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 
 <link rel="next" href="data-sources.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,8 +51,9 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 
@@ -68,12 +70,43 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">SHORT TITLE HERE</a></li>
+<li><a href="./">btc</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#what-is-basis"><i class="fa fa-check"></i><b>1.1</b> What is basis?</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#future-market-in-crypto"><i class="fa fa-check"></i><b>1.2</b> Future market in Crypto</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#what-is-perpetual-swap-and-future-swap"><i class="fa fa-check"></i><b>1.2.1</b> What is perpetual swap and future swap?</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#what-is-funding-rate"><i class="fa fa-check"></i><b>1.2.2</b> What is Funding Rate?</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#why-future-markets"><i class="fa fa-check"></i><b>1.2.3</b> Why future markets?</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#example"><i class="fa fa-check"></i><b>1.2.4</b> Example:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#how-to-trade-by-basis-hedge"><i class="fa fa-check"></i><b>1.3</b> How to trade by basis?? Hedge!</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#explaination"><i class="fa fa-check"></i><b>1.3.1</b> Explaination:</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#main-idea"><i class="fa fa-check"></i><b>1.3.2</b> Main Idea</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
-<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#crawling-datasets"><i class="fa fa-check"></i><b>3.1</b> Crawling Datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#calcuate-the-basis"><i class="fa fa-check"></i><b>3.2</b> Calcuate the basis:</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data-transformation.html"><a href="data-transformation.html#open-btc-perpetual-swap-datasets"><i class="fa fa-check"></i><b>3.2.1</b> Open BTC perpetual-swap datasets</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-transformation.html"><a href="data-transformation.html#open-btc-future-swap-datasets"><i class="fa fa-check"></i><b>3.2.2</b> Open btc future swap datasets</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-transformation.html"><a href="data-transformation.html#calculate-the-basis"><i class="fa fa-check"></i><b>3.2.3</b> Calculate the % basis</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-transformation.html"><a href="data-transformation.html#calculate-annual-basis"><i class="fa fa-check"></i><b>3.2.4</b> Calculate Annual Basis:</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#fear-index"><i class="fa fa-check"></i><b>3.3</b> Fear Index</a></li>
+<li class="chapter" data-level="3.4" data-path="data-transformation.html"><a href="data-transformation.html#funding-rate"><i class="fa fa-check"></i><b>3.4</b> Funding Rate</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="data-transformation.html"><a href="data-transformation.html#funding-rate-1"><i class="fa fa-check"></i><b>3.4.1</b> Funding rate</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="data-transformation.html"><a href="data-transformation.html#daily-volatility"><i class="fa fa-check"></i><b>3.5</b> Daily Volatility</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -89,7 +122,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">YOUR TITLE HERE</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BTC strategy visualization</a>
           </h1>
         </div>
 
@@ -98,13 +131,68 @@
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">YOUR TITLE HERE</h1>
-<p class="author"><em>YOUR NAMES HERE</em></p>
-<p class="date"><em>2020-11-09</em></p>
+<h1 class="title">BTC strategy visualization</h1>
+<p class="author"><em>Boquan Sun, Zonghan Yue and Wen Zhan</em></p>
+<p class="date"><em>2021-12-10</em></p>
 </div>
 <div id="introduction" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<p>The future markets in Cryptocurrencies are notorious for high volatility. Finding a trading strategy stable and profitable in the cryptomarket is a hard task. In this project, we introduce a trading strategy called Basis Trading Strategy. It is not only a practical way to trade (not a high frequency trading strategy), but also profitable.</p>
+<div id="what-is-basis" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> What is basis?</h2>
+<p>Basis is the difference between the spot price (just the coin price) of an asset and its futures price. In this project, we defined the basis as the ratio of price difference between perpetual swap and future swap. The equation of basis is B = (F - S) / S. Here is the historic basis of ETH price between perpetual swap and future swap. From the figure below, we can see the current basis is about 2.7%
+<img src="figures/Introduction/Binance_basis.jpg" /><!-- --></p>
+</div>
+<div id="future-market-in-crypto" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Future market in Crypto</h2>
+<p>There are many Derivative Products in Crypto Market. We only use Perpetual Swap and Future Swap to design trading strategy.</p>
+<div id="what-is-perpetual-swap-and-future-swap" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> What is perpetual swap and future swap?</h3>
+<p>A Futures swap is a futures contract that allows a trader to buy or sell the underlying asset at a predetermined price before a specified period. In other words, futures contracts have a limited lifespan and will expire based on their respective calendar cycle.
+In simple terms, you can buy the future swaps just like buy cryptocurrencies, but you must sell the contracts before their lifespan. An important characteristic of future swap is that at the expiry date, the price of future swap equal to the price of spot market .</p>
+<p>Perpetual swap is another kind of future contracts, as the name suggests, do not have an expiration date. The exchange has mechanism call funding rate to guarantee that the price difference between perpetual swap and future swap is within a reasonable range.</p>
+</div>
+<div id="what-is-funding-rate" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> What is Funding Rate?</h3>
+<p>perpetual futures contracts never settle in the traditional sense, exchanges need a mechanism to ensure that futures prices and index prices converge on a regular basis. This mechanism is also known as Funding Rate/Fees. When the funding rate is positive, the long position holders will pay the short position holders. When the funding rate is negative, the short position holders will pay the long position holders. The value of the funding rate represents how much percent you will pay or receive.</p>
+</div>
+<div id="why-future-markets" class="section level3" number="1.2.3">
+<h3><span class="header-section-number">1.2.3</span> Why future markets?</h3>
+<p>In future markets, you can easily open high leverage. Future markets allow people open short position and long position in same time. However, two important points must be pay attention to open high leverage are, the future swap is usually more expensive than spot, and the perpetual swap has an unpredictable fee called “funding rate”. Here is the official document to introduce the future swap, perpetual swap and funding rate. To fully understand how the future market works, you have to read this document.
+<a href="https://www.binance.com/en/support/faq/d2a1afd5f829455c9ded23f0ca561a40" class="uri">https://www.binance.com/en/support/faq/d2a1afd5f829455c9ded23f0ca561a40</a></p>
+</div>
+<div id="example" class="section level3" number="1.2.4">
+<h3><span class="header-section-number">1.2.4</span> Example:</h3>
+<p>Here is how future market looks like in crypto!
+<img src="figures/Introduction/Binance_fut_market.png" width="306" /></p>
+<p>The symbol “BTCUSD Quarterly 0325” represents the future swap which would expire in 03/25/2022. The “ETHUSD perpetual” is the perpetual swap. In this time, the basis will be calculated as (49234.7 - 47991.2) / 47991.2 = 0.026%.</p>
+</div>
+</div>
+<div id="how-to-trade-by-basis-hedge" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> How to trade by basis?? Hedge!</h2>
+<p>It is pretty obvious that you can easily design a risk free trading strategy based on the basis. For example, you can just long the spots and short the futures.</p>
+<div id="explaination" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Explaination:</h3>
+<pre><code>\(BTCUSD Quarterly0325 price = 49234.7$\)
+\(BTC price= 47991.2$\)</code></pre>
+<p>You can just short 1 ETH in ETHUSD Quarterly0325 contract, and also buy 1 ETH in Spot market.</p>
+<p>We know that on March 25 2022,<br />
+</p>
+<p>ETHUSD Quarterly0325 price = ETH price.</p>
+<p>Let P is the ETH price on March 25 2022.</p>
+<p>The profit/loss form short ETHUSD Quarterly0325 = 49234.7$ - X<br />
+The profit/loss form long ETHUSD = X - 47991.2$<br />
+The total profit/loss = 49234.7$ - X + X - 47991.2$ = 1243.5$<br />
+</p>
+<p>It takes more than 3 month to make 1243.5 / (49234.7 + 47991.2) = 1.28% risk free return. However, the return is too little to trade on the real market.</p>
+</div>
+<div id="main-idea" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Main Idea</h3>
+<p>The main idea of our trading strategy is to open the position when the basis reach the bottom or top and make profit when the basis recovered to the regular level. We will trade entirely on the future market and high leverage to expand the profit. For example, if there is no funding rate, we can open the short basis position with 100 leverages and get 160% return in 3 months. However, the accumulation of funding rate needs to be considered carefully. We will lose everything if opening a position without any pre-calculate.</p>
+<p>The good news is that our project tells you how to calculate your maxium loss, pointed out the good time to open the position, and provide backtest algorithm to verify our strategy. We also used historic price data sets and fundamental data sets to provide the insights of the basis.</p>
 
+</div>
+</div>
 </div>
             </section>
 
@@ -116,7 +204,6 @@
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -135,6 +222,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -143,7 +231,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/index.Rmd",
+"link": "https://github.com/boquanSun/btcStrategy/edit/main/index.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -151,10 +239,14 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/index.Rmd",
+"link": "https://github.com/boquanSun/btcStrategy/blob/main/index.Rmd",
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

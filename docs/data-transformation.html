@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Data transformation | btc strategy visualization</title>
-  <meta name="description" content="Chapter 4 Data transformation | btc strategy visualization" />
+  <title>Chapter 3 Data transformation | BTC strategy visualization</title>
+  <meta name="description" content="Chapter 3 Data transformation | BTC strategy visualization" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Data transformation | btc strategy visualization" />
+  <meta property="og:title" content="Chapter 3 Data transformation | BTC strategy visualization" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Data transformation | btc strategy visualization" />
+  <meta name="twitter:title" content="Chapter 3 Data transformation | BTC strategy visualization" />
   
   
   
@@ -24,14 +24,14 @@
 <meta name="author" content="Boquan Sun, Zonghan Yue and Wen Zhan" />
 
 
-<meta name="date" content="2021-12-08" />
+<meta name="date" content="2021-12-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="data-sources-1.html"/>
+<link rel="prev" href="data-sources.html"/>
 <link rel="next" href="missing-values.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -73,33 +73,52 @@
 <li><a href="./">btc</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#what-is-basis"><i class="fa fa-check"></i><b>1.1</b> What is basis?</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#future-market-in-crypto"><i class="fa fa-check"></i><b>1.2</b> Future market in Crypto</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#what-is-perpetual-swap-and-future-swap"><i class="fa fa-check"></i><b>1.2.1</b> What is perpetual swap and future swap?</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#what-is-funding-rate"><i class="fa fa-check"></i><b>1.2.2</b> What is Funding Rate?</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#why-future-markets"><i class="fa fa-check"></i><b>1.2.3</b> Why future markets?</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#example"><i class="fa fa-check"></i><b>1.2.4</b> Example:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#how-to-trade-by-basis-hedge"><i class="fa fa-check"></i><b>1.3</b> How to trade by basis?? Hedge!</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#explaination"><i class="fa fa-check"></i><b>1.3.1</b> Explaination:</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#main-idea"><i class="fa fa-check"></i><b>1.3.2</b> Main Idea</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#open-btc-perpetual-swap-hour-level-guaranity-candlestick-datasets-the-datasets-download-from-binance-api"><i class="fa fa-check"></i><b>2.1</b> Open BTC perpetual-swap hour-level guaranity candlestick datasets: the datasets download from Binance API:</a>
+<li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#crawling-datasets"><i class="fa fa-check"></i><b>2.1</b> Crawling Datasets</a></li>
+<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#data-contents"><i class="fa fa-check"></i><b>2.2</b> Data Contents</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="data-sources.html"><a href="data-sources.html#the-function-to-calcuate-basis-based-on-future-swap-and-perpetual-swap"><i class="fa fa-check"></i><b>2.1.1</b> The function to calcuate basis based on future swap and perpetual swap</a></li>
-<li class="chapter" data-level="2.1.2" data-path="data-sources.html"><a href="data-sources.html#open-btc-future-swap-datasets-and-store-the-basis-dataframe-into-dictionary-called-futures.-the-key-of-futures-dic-is-the-delivery-date-of-the-contract"><i class="fa fa-check"></i><b>2.1.2</b> Open btc future swap datasets and store the basis dataframe into dictionary called futures. The key of futures dic is the delivery date of the contract</a></li>
-<li class="chapter" data-level="2.1.3" data-path="data-sources.html"><a href="data-sources.html#dataframe-content"><i class="fa fa-check"></i><b>2.1.3</b> dataframe content</a></li>
+<li class="chapter" data-level="2.2.1" data-path="data-sources.html"><a href="data-sources.html#future-market-price"><i class="fa fa-check"></i><b>2.2.1</b> Future Market Price</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-sources.html"><a href="data-sources.html#on-chain-data-set"><i class="fa fa-check"></i><b>2.2.2</b> On-chain Data Set</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-sources.html"><a href="data-sources.html#fundmental-dataset"><i class="fa fa-check"></i><b>2.2.3</b> Fundmental Dataset</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#converting-the-quarter-basis-to-the-annual-basis"><i class="fa fa-check"></i><b>2.2</b> Converting the quarter basis to the annual basis:</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-sources-1.html"><a href="data-sources-1.html"><i class="fa fa-check"></i><b>3</b> Data sources</a>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-sources-1.html"><a href="data-sources-1.html#crawling-datasets"><i class="fa fa-check"></i><b>3.1</b> crawling datasets</a></li>
-<li class="chapter" data-level="3.2" data-path="data-sources-1.html"><a href="data-sources-1.html#open-btc-perpetual-swap-hour-level-guaranity-candlestick-datasets-the-datasets-download-from-binance-api-1"><i class="fa fa-check"></i><b>3.2</b> Open BTC perpetual-swap hour-level guaranity candlestick datasets: the datasets download from Binance API:</a>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#calcuate-the-basis"><i class="fa fa-check"></i><b>3.1</b> Calcuate the basis:</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="data-sources-1.html"><a href="data-sources-1.html#the-function-to-calcuate-basis-based-on-future-swap-and-perpetual-swap-1"><i class="fa fa-check"></i><b>3.2.1</b> The function to calcuate basis based on future swap and perpetual swap</a></li>
-<li class="chapter" data-level="3.2.2" data-path="data-sources-1.html"><a href="data-sources-1.html#open-btc-future-swap-datasets-and-store-the-basis-dataframe-into-dictionary-called-futures.-the-key-of-futures-dic-is-the-delivery-date-of-the-contract-1"><i class="fa fa-check"></i><b>3.2.2</b> Open btc future swap datasets and store the basis dataframe into dictionary called futures. The key of futures dic is the delivery date of the contract</a></li>
-<li class="chapter" data-level="3.2.3" data-path="data-sources-1.html"><a href="data-sources-1.html#dataframe-content-1"><i class="fa fa-check"></i><b>3.2.3</b> dataframe content</a></li>
+<li class="chapter" data-level="3.1.1" data-path="data-transformation.html"><a href="data-transformation.html#open-btc-perpetual-swap-datasets"><i class="fa fa-check"></i><b>3.1.1</b> Open BTC perpetual-swap datasets</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-transformation.html"><a href="data-transformation.html#open-btc-future-swap-datasets"><i class="fa fa-check"></i><b>3.1.2</b> Open btc future swap datasets</a></li>
+<li class="chapter" data-level="3.1.3" data-path="data-transformation.html"><a href="data-transformation.html#calculate-the-basis"><i class="fa fa-check"></i><b>3.1.3</b> Calculate the % basis</a></li>
+<li class="chapter" data-level="3.1.4" data-path="data-transformation.html"><a href="data-transformation.html#calculate-annual-basis"><i class="fa fa-check"></i><b>3.1.4</b> Calculate Annual Basis:</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="data-sources-1.html"><a href="data-sources-1.html#converting-the-quarter-basis-to-the-annual-basis-1"><i class="fa fa-check"></i><b>3.3</b> Converting the quarter basis to the annual basis:</a></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#fear-index"><i class="fa fa-check"></i><b>3.2</b> Fear Index</a></li>
+<li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#funding-rate"><i class="fa fa-check"></i><b>3.3</b> Funding Rate</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="data-transformation.html"><a href="data-transformation.html#funding-rate-1"><i class="fa fa-check"></i><b>3.3.1</b> Funding rate</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>4</b> Data transformation</a></li>
-<li class="chapter" data-level="5" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>5</b> Missing values</a></li>
-<li class="chapter" data-level="6" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>6</b> Results</a></li>
-<li class="chapter" data-level="7" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>7</b> Interactive component</a></li>
-<li class="chapter" data-level="8" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>8</b> Conclusion</a></li>
+<li class="chapter" data-level="3.4" data-path="data-transformation.html"><a href="data-transformation.html#daily-volatility"><i class="fa fa-check"></i><b>3.4</b> Daily Volatility</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -111,7 +130,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">btc strategy visualization</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BTC strategy visualization</a>
           </h1>
         </div>
 
@@ -119,16 +138,147 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-transformation" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Data transformation</h1>
+<div id="data-transformation" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
+<div id="calcuate-the-basis" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Calcuate the basis:</h2>
+<p>Our trading strategy is based on the future swap and perpetual swap.
+We will use the future swap and perpetual swap to calculate the basis ratio.</p>
+<div id="open-btc-perpetual-swap-datasets" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Open BTC perpetual-swap datasets</h3>
+<p>Raw Data Set Description:</p>
+<p>Time: the hour-level granularity time represent the time period between last hour to current hour<br />
+Open: the first trade price in current time period<br />
+High: the highest trade price in current time period<br />
+Low: the lowest trade price in current time period<br />
+Close: the last trade price in current time period<br />
+Other features: Ignore</p>
+<pre><code>##   X                time    open    high     low   close   volume   volCcy
+## 1 0 2021-12-03 15:00:00 56226.1 56340.7 55722.8 55962.4 653.5835 36660474
+## 2 1 2021-12-03 14:00:00 56866.3 56920.2 56163.8 56236.8 561.0258 31740016
+## 3 2 2021-12-03 13:00:00 56787.7 57617.8 56743.8 56866.3 704.8217 40256499
+## 4 3 2021-12-03 12:00:00 56971.9 57186.6 56753.7 56787.7 294.2107 16761285
+## 5 4 2021-12-03 11:00:00 56842.3 57177.4 56796.4 56971.9 316.2351 18014186
+## 6 5 2021-12-03 10:00:00 56822.8 57321.5 56666.6 56842.3 708.5333 40389947</code></pre>
+<p>Calcuate the price by (high + low + close)/3, drop the useless columns</p>
+<pre><code>## # A tibble: 6 x 2
+##   date       price
+##   &lt;date&gt;     &lt;dbl&gt;
+## 1 2019-10-01 8342.
+## 2 2019-10-02 8242.
+## 3 2019-10-03 8227.
+## 4 2019-10-04 8137.
+## 5 2019-10-05 8096.
+## 6 2019-10-06 7957.</code></pre>
+</div>
+<div id="open-btc-future-swap-datasets" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Open btc future swap datasets</h3>
+<p>There are 8 different future contracts. 6 are already expired, and 2 still exist in current market. The expiration date of those contracts are “2020-06-26”, “2020-09-25”, “2020-12-25”, “2021-03-26”, “2021-06-25”, “2021-09-24”, “2021-12-31”, “2022-03-25”</p>
+<p>Raw Data Set Description:</p>
+<p>Time: the hour-level granularity time represent the time period between last hour to current hour<br />
+Open: the first trade price in current time period<br />
+High: the highest trade price in current time period<br />
+Low: the lowest trade price in current time period<br />
+Close: the last trade price in current time period<br />
+Other features: Ignore</p>
+</div>
+<div id="calculate-the-basis" class="section level3" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> Calculate the % basis</h3>
+<p>Equation Basis = (future - perpetual) / perpetual * 100</p>
+<p>Data Description</p>
+<p>Date: the date<br />
+Perpetual: the price of perpetual contract for a BTC<br />
+Future: the price of future contract for a BTC<br />
+Basis: the % ratio basis<br />
+</p>
+<p>Example: the Basis DataFrame of the contract expired at 2020-06-26</p>
+<pre><code>##         date perpetual   future    basis
+## 1 2020-03-02  8750.138 9084.265 3.818543
+## 2 2020-03-03  8782.385 9091.958 3.524938
+## 3 2020-03-04  8756.864 9042.914 3.266580
+## 4 2020-03-05  9012.137 9320.990 3.427076
+## 5 2020-03-06  9079.136 9427.576 3.837813
+## 6 2020-03-07  9034.801 9372.068 3.732973</code></pre>
+</div>
+<div id="calculate-annual-basis" class="section level3" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> Calculate Annual Basis:</h3>
+<p>Converting the quarter basis to the annual basis<br />
+</p>
+<p>Annual Basis: because the basis highly depends on the expiration days. I will eliminate this trait by converting quarter basis to the annual basis.<br />
+Equation: annual basis = quarter basis / days left * 365</p>
+<pre><code>##         date perpetual   future    basis annual_basis
+## 1 2020-09-13  10389.79 10595.51 1.979962     3.725186
+## 2 2020-09-14  10506.27 10707.27 1.913077     3.617994
+## 3 2020-09-15  10770.20 11010.96 2.235464     4.249710
+## 4 2020-09-16  10896.82 11169.78 2.504948     4.786942
+## 5 2020-09-17  10888.69 11213.49 2.982937     5.730379
+## 6 2020-09-18  10922.42 11255.72 3.051573     5.893249</code></pre>
+</div>
+</div>
+<div id="fear-index" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Fear Index</h2>
+<p>The crypto market behaviour is very emotional. People tend to get greedy when the market is rising. Also, people often sell their coins in irrational reaction of seeing red numbers. We assume the basis highly depend on emotion. When the market is extreme fear or extreme greedy, it might represents the basis is in the bottom or in the top.</p>
+<pre><code>##   X  timestamp mvrv fear       time
+## 1 0 1230940800    0   50 2009-01-03
+## 2 1 1231027200   NA   50 2009-01-04
+## 3 2 1231113600   NA   50 2009-01-05
+## 4 3 1231200000   NA   50 2009-01-06
+## 5 4 1231286400   NA   50 2009-01-07
+## 6 5 1231372800   NA   50 2009-01-08</code></pre>
+<pre><code>##         date perpetual   future    basis annual_basis fear
+## 1 2020-03-02  8750.138 9084.265 3.818543     12.01524   38
+## 2 2020-03-03  8782.385 9091.958 3.524938     11.18785   38
+## 3 2020-03-04  8756.864 9042.914 3.266580     10.45879   40
+## 4 2020-03-05  9012.137 9320.990 3.427076     11.06976   41
+## 5 2020-03-06  9079.136 9427.576 3.837813     12.50716   39
+## 6 2020-03-07  9034.801 9372.068 3.732973     12.27509   38</code></pre>
+</div>
+<div id="funding-rate" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Funding Rate</h2>
+<div id="funding-rate-1" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Funding rate</h3>
+<p>Funding rates are periodic payments either to traders that are long or short based on the difference between perpetual contract markets and spot prices. Therefore, depending on open positions, traders will either pay or receive funding.</p>
+<p>Because Exchange only have funding rate data Set since 1/9/2021, we would not merge funding rate into basis dataframe</p>
+<pre><code>## # A tibble: 6 x 2
+##   date       Funding.Rate
+##   &lt;date&gt;            &lt;dbl&gt;
+## 1 2021-01-09       0.0579
+## 2 2021-01-10       0.154 
+## 3 2021-01-11       0.268 
+## 4 2021-01-12       0.0896
+## 5 2021-01-13       0.0679
+## 6 2021-01-14       0.171</code></pre>
+</div>
+</div>
+<div id="daily-volatility" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Daily Volatility</h2>
+<p>Volatility is a useful indicator to describe the degree of variation of a trading price series over time. We assume the higher Volatility, the higher possibility the basis reach bottom or top.</p>
+<pre><code>## # A tibble: 6 x 2
+##   date       Volatility
+##   &lt;date&gt;          &lt;dbl&gt;
+## 1 2019-10-01       7.74
+## 2 2019-10-02       4.54
+## 3 2019-10-03       5.96
+## 4 2019-10-04       3.83
+## 5 2019-10-05       3.43
+## 6 2019-10-06       7.95</code></pre>
+<p>Merge Volatility into basis dataframe</p>
+<pre><code>##         date perpetual   future    basis annual_basis fear Volatility
+## 1 2020-03-02  8750.138 9084.265 3.818543     12.01524   38   4.428283
+## 2 2020-03-03  8782.385 9091.958 3.524938     11.18785   38   4.719222
+## 3 2020-03-04  8756.864 9042.914 3.266580     10.45879   40   3.626357
+## 4 2020-03-05  9012.137 9320.990 3.427076     11.06976   41   5.549557
+## 5 2020-03-06  9079.136 9427.576 3.837813     12.50716   39   3.788059
+## 6 2020-03-07  9034.801 9372.068 3.732973     12.27509   38   5.616042</code></pre>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="data-sources-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-sources.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="missing-values.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

@@ -5,3 +5,56 @@ output:
 ---
 # Data sources
 
+## Crawling Datasets
+
+All the dataset are crawled by the python script. See the python scripts "DataMinning" for the details of crawling datasets.
+
+Here is API link for the Data Sets: 
+
+The price Data Sets: https://binance-docs.github.io/apidocs/spot/en/#change-log
+
+The fundmental Data Sets: https://docs.glassnode.com/
+
+The fear index: https://alternative.me/crypto/fear-and-greed-index/
+
+All the data sets are in the folders called "edav_onchaindata" 
+
+## Data Contents
+
+### Future Market Price
+
+We collected the 8 different BTC-USDT historic future contracts data. It is under "edav_onchaindata/future-swap" folder. 
+
+Also, we collected the perpetual swap datasets. The file name is 
+"BTC-USDT.csv"
+
+### On-chain Data Set
+
+We also collected the history on-chain data: \
+
+Whales behavior: \
+1. the number of unique addresses holding at least 100 btc coins. \
+2. the number of unique addresses holding at least 1k btc coins. \
+3. the number of unique addresses holding at least 10k btc coins. \
+
+Long holder behavior: \
+1. The amount of circulating supply last moved between 1 month and 3 months ago. \
+2. The amount of circulating supply last moved between 3 months and 6 months ago. \
+3. The amount of circulating supply last moved between 6 months and 12 months ago. \
+4. The amount of circulating supply last moved between 1 year and 2 years ago. \
+5. The amount of circulating supply last moved between 2 years and 3 years ago. \
+6. The amount of circulating supply last moved between 3 years and 5 years ago. \
+7. The amount of circulating supply last moved between 5 years and 7 years ago.\
+
+We choose those data based on the assumption that the whale holding ratio and long holder ratio have an impact on btc price in the long term.
+
+### Fundmental Dataset
+
+We also collected the history fear index:
+
+Fear index consisted by Volatility, Market Momentum/Volume, Social Media, Dominance, Trends
+
+We choose fear index because we assume when the market is Extreme Fear or Extreme Greed, we basis might be on the bottom or on the top.  
+
+
+

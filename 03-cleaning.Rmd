@@ -1,15 +1,4 @@
 # Data transformation
-## Crawling Datasets
-
-All the dataset are crawled by the python. See the python scripts in folder "DataMinning" for the details of crawling datasets.
-
-The price datasets: https://binance-docs.github.io/apidocs/spot/en/#change-log
-
-The fundmental datasets: https://docs.glassnode.com/
-
-The fear index: https://alternative.me/crypto/fear-and-greed-index/
-
-We would used the Raw Datasets to create the target variables.
 
 ```{r}
 library(tidyverse)
@@ -172,6 +161,14 @@ head(funding_rate)
 ## Daily Volatility
 
 Volatility is a useful indicator to describe the degree of variation of a trading price series over time. We assume the higher Volatility, the higher possibility the basis reach bottom or top.
+```{r}
+real_volatility <- function(price) {
+   ret <- log(lag(price)) - log(price)
+   ret[is.na(ret)]<-0
+   vol <- sd(ret) * sqrt(252) * 100
+   return(vol)
+}
+```
 
 ```{r}
 df <- read.csv('./edav_onchaindata/BTC-USDT.csv')
@@ -179,7 +176,7 @@ df$date = as.Date(df$time)
 df$price = (df$high + df$low +df$close)/3
 df = df%>%
   group_by(date) %>%
-  summarise(Volatility = sd(price))
+  summarise(Volatility = real_volatility(price))
 head(df)
 ```
 Merge Volatility into basis dataframe
