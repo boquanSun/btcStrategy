@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Data sources | btc strategy visualization</title>
+  <meta name="description" content="Chapter 3 Data sources | btc strategy visualization" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Data sources | btc strategy visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Data sources | btc strategy visualization" />
+  
+  
+  
+
+<meta name="author" content="Boquan Sun, Zonghan Yue and Wen Zhan" />
+
+
+<meta name="date" content="2021-12-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-sources.html"/>
+<link rel="next" href="data-transformation.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">btc</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#open-btc-perpetual-swap-hour-level-guaranity-candlestick-datasets-the-datasets-download-from-binance-api"><i class="fa fa-check"></i><b>2.1</b> Open BTC perpetual-swap hour-level guaranity candlestick datasets: the datasets download from Binance API:</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-sources.html"><a href="data-sources.html#the-function-to-calcuate-basis-based-on-future-swap-and-perpetual-swap"><i class="fa fa-check"></i><b>2.1.1</b> The function to calcuate basis based on future swap and perpetual swap</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-sources.html"><a href="data-sources.html#open-btc-future-swap-datasets-and-store-the-basis-dataframe-into-dictionary-called-futures.-the-key-of-futures-dic-is-the-delivery-date-of-the-contract"><i class="fa fa-check"></i><b>2.1.2</b> Open btc future swap datasets and store the basis dataframe into dictionary called futures. The key of futures dic is the delivery date of the contract</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-sources.html"><a href="data-sources.html#dataframe-content"><i class="fa fa-check"></i><b>2.1.3</b> dataframe content</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#converting-the-quarter-basis-to-the-annual-basis"><i class="fa fa-check"></i><b>2.2</b> Converting the quarter basis to the annual basis:</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-sources-1.html"><a href="data-sources-1.html"><i class="fa fa-check"></i><b>3</b> Data sources</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-sources-1.html"><a href="data-sources-1.html#crawling-datasets"><i class="fa fa-check"></i><b>3.1</b> crawling datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="data-sources-1.html"><a href="data-sources-1.html#calcuate-the-basis"><i class="fa fa-check"></i><b>3.2</b> Calcuate the basis:</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data-sources-1.html"><a href="data-sources-1.html#open-btc-perpetual-swap-hour-level-guaranity-candlestick-datasets-the-datasets-download-from-binance-api-1"><i class="fa fa-check"></i><b>3.2.1</b> Open BTC perpetual-swap hour-level guaranity candlestick datasets: the datasets download from Binance API:</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-sources-1.html"><a href="data-sources-1.html#the-function-to-calcuate-basis-based-on-future-swap-and-perpetual-swap-1"><i class="fa fa-check"></i><b>3.2.2</b> The function to calcuate basis based on future swap and perpetual swap</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-sources-1.html"><a href="data-sources-1.html#open-btc-future-swap-datasets-and-store-the-basis-dataframe-into-dictionary-called-futures.-the-key-of-futures-dic-is-the-delivery-date-of-the-contract-1"><i class="fa fa-check"></i><b>3.2.3</b> Open btc future swap datasets and store the basis dataframe into dictionary called futures. The key of futures dic is the delivery date of the contract</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-sources-1.html"><a href="data-sources-1.html#dataframe-content-1"><i class="fa fa-check"></i><b>3.2.4</b> dataframe content</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-sources-1.html"><a href="data-sources-1.html#converting-the-quarter-basis-to-the-annual-basis-1"><i class="fa fa-check"></i><b>3.3</b> Converting the quarter basis to the annual basis:</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>4</b> Data transformation</a></li>
+<li class="chapter" data-level="5" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>5</b> Missing values</a></li>
+<li class="chapter" data-level="6" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>6</b> Results</a></li>
+<li class="chapter" data-level="7" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>7</b> Interactive component</a></li>
+<li class="chapter" data-level="8" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>8</b> Conclusion</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">btc strategy visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-sources-1" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Data sources</h1>
+<div id="crawling-datasets" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> crawling datasets</h2>
+<p>All the dataset are crawled by the python. See the python scripts in folder “DataMinning” for the details of crawling datasets.</p>
+<p>The price datasets crawled from binance restful API.
+<a href="https://binance-docs.github.io/apidocs/spot/en/#change-log" class="uri">https://binance-docs.github.io/apidocs/spot/en/#change-log</a></p>
+<p>The fundmental datasets crawled from glassnode api.
+<a href="https://docs.glassnode.com/" class="uri">https://docs.glassnode.com/</a></p>
+<p>The fear index crawled from alternative api.
+<a href="https://alternative.me/crypto/fear-and-greed-index/" class="uri">https://alternative.me/crypto/fear-and-greed-index/</a></p>
+<p>We would used the raw datasets to create the target variables.</p>
+</div>
+<div id="calcuate-the-basis" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Calcuate the basis:</h2>
+<p>Our trading strategy is based on the future swap and perpetual swap.
+We will use the future swap and perpetual swap to calculate the basis ratio.</p>
+<div id="open-btc-perpetual-swap-hour-level-guaranity-candlestick-datasets-the-datasets-download-from-binance-api-1" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Open BTC perpetual-swap hour-level guaranity candlestick datasets: the datasets download from Binance API:</h3>
+<p>Calcuating the price by (high + low + close)/3
+High: the highest trade price in current time period
+Low: the lowest trade price in current time period
+Close: the lastest trade price in current time period</p>
+<pre><code>## # A tibble: 795 x 2
+##    date       price
+##    &lt;date&gt;     &lt;dbl&gt;
+##  1 2019-10-01 8342.
+##  2 2019-10-02 8242.
+##  3 2019-10-03 8227.
+##  4 2019-10-04 8137.
+##  5 2019-10-05 8096.
+##  6 2019-10-06 7957.
+##  7 2019-10-07 8032.
+##  8 2019-10-08 8198.
+##  9 2019-10-09 8332.
+## 10 2019-10-10 8535.
+## # ... with 785 more rows</code></pre>
+</div>
+<div id="the-function-to-calcuate-basis-based-on-future-swap-and-perpetual-swap-1" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> The function to calcuate basis based on future swap and perpetual swap</h3>
+<p>Calculate the % basis by (future - perpetual) / perpetual * 100</p>
+</div>
+<div id="open-btc-future-swap-datasets-and-store-the-basis-dataframe-into-dictionary-called-futures.-the-key-of-futures-dic-is-the-delivery-date-of-the-contract-1" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Open btc future swap datasets and store the basis dataframe into dictionary called futures. The key of futures dic is the delivery date of the contract</h3>
+<p>All the future datasets are in the dictionary called “futures”
+The “futures” dic key: the expiry date of the contract.</p>
+</div>
+<div id="dataframe-content-1" class="section level3" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> dataframe content</h3>
+<p>Date: the date
+Perpetual: the price of perpetual contract for a BTC
+Future: the price of future contract for a BTC
+Basis: the % ratio basis</p>
+<pre><code>##           date perpetual   future         basis
+## 1   2020-03-02  8750.138 9084.265  3.8185431689
+## 2   2020-03-03  8782.385 9091.958  3.5249379400
+## 3   2020-03-04  8756.864 9042.914  3.2665804063
+## 4   2020-03-05  9012.137 9320.990  3.4270757384
+## 5   2020-03-06  9079.136 9427.576  3.8378131302
+## 6   2020-03-07  9034.801 9372.068  3.7329726703
+## 7   2020-03-08  8550.225 8795.079  2.8637160621
+## 8   2020-03-09  7880.003 8094.961  2.7278966695
+## 9   2020-03-10  7940.054 8145.286  2.5847675612
+## 10  2020-03-11  7845.467 8057.986  2.7088183976
+## 11  2020-03-12  6628.885 6724.522  1.4427389223
+## 12  2020-03-13  5217.787 5017.518 -3.8382062214
+## 13  2020-03-14  5391.911 5249.650 -2.6384172176
+## 14  2020-03-15  5315.071 5293.085 -0.4136560321
+## 15  2020-03-16  4992.863 4963.540 -0.5872827906
+## 16  2020-03-17  5292.140 5270.625 -0.4065515396
+## 17  2020-03-18  5272.582 5231.090 -0.7869326092
+## 18  2020-03-19  5742.458 5724.350 -0.3153411358
+## 19  2020-03-20  6354.772 6350.651 -0.0648462791
+## 20  2020-03-21  6164.572 6168.374  0.0616650881
+## 21  2020-03-22  6127.932 6118.565 -0.1528520021
+## 22  2020-03-23  6094.161 6086.258 -0.1296778610
+## 23  2020-03-24  6631.910 6620.657 -0.1696762810
+## 24  2020-03-25  6643.932 6610.796 -0.4987424824
+## 25  2020-03-26  6655.932 6631.714 -0.3638567185
+## 26  2020-03-27  6669.581 6641.000 -0.4285210339
+## 27  2020-03-28  6212.614 6132.482 -1.2898265670
+## 28  2020-03-29  6101.319 6049.767 -0.8449447410
+## 29  2020-03-30  6259.461 6206.643 -0.8438115457
+## 30  2020-03-31  6442.036 6384.289 -0.8964125818
+## 31  2020-04-01  6301.879 6254.704 -0.7485862352
+## 32  2020-04-02  6712.887 6712.935  0.0007034562
+## 33  2020-04-03  6808.626 6793.507 -0.2220630650
+## 34  2020-04-04  6763.936 6751.586 -0.1825859943
+## 35  2020-04-05  6789.640 6776.369 -0.1954570904
+## 36  2020-04-06  7082.785 7102.260  0.2749624726
+## 37  2020-04-07  7308.915 7349.729  0.5584123955
+## 38  2020-04-08  7296.876 7344.100  0.6471757036
+## 39  2020-04-09  7294.417 7337.463  0.5901202975
+## 40  2020-04-10  6961.783 6951.906 -0.1418857397
+## 41  2020-04-11  6860.337 6842.907 -0.2540772310
+## 42  2020-04-12  6931.861 6912.247 -0.2829527103
+## 43  2020-04-13  6736.343 6697.106 -0.5824747890
+## 44  2020-04-14  6867.675 6841.594 -0.3797581504
+## 45  2020-04-15  6792.436 6775.606 -0.2477837889
+## 46  2020-04-16  6907.919 6902.712 -0.0753764500
+## 47  2020-04-17  7062.021 7058.790 -0.0457454832
+## 48  2020-04-18  7148.564 7162.486  0.1947555123
+## 49  2020-04-19  7158.561 7149.762 -0.1229103304
+## 50  2020-04-20  7038.394 7024.781 -0.1934232160
+## 51  2020-04-21  6855.004 6832.825 -0.3235470924
+## 52  2020-04-22  6992.007 6974.442 -0.2512193983
+## 53  2020-04-23  7289.042 7306.775  0.2432875835
+## 54  2020-04-24  7515.986 7541.963  0.3456151795
+## 55  2020-04-25  7538.100 7553.168  0.1998919563
+## 56  2020-04-26  7594.824 7600.788  0.0785257064
+## 57  2020-04-27  7701.728 7691.449 -0.1334657231
+## 58  2020-04-28  7718.232 7715.665 -0.0332545936
+## 59  2020-04-29  8242.106 8254.392  0.1490651998
+## 60  2020-04-30  8880.501 8944.119  0.7163790958
+## 61  2020-05-01  8780.404 8840.050  0.6793062392
+## 62  2020-05-02  8864.983 8934.435  0.7834350757
+## 63  2020-05-03  8966.528 9028.293  0.6888427640
+## 64  2020-05-04  8758.006 8801.024  0.4911855249
+## 65  2020-05-05  8923.071 8953.004  0.3354599991
+## 66  2020-05-06  9148.608 9187.138  0.4211478431
+## 67  2020-05-07  9482.038 9531.696  0.5237095227
+## 68  2020-05-08  9900.293 9975.840  0.7630806664
+## 69  2020-05-09  9715.671 9793.533  0.8014114654
+## 70  2020-05-10  8656.343 8659.974  0.0419409852
+## 71  2020-05-11  8691.890 8698.021  0.0705319023
+## 72  2020-05-12  8764.843 8754.575 -0.1171504782
+## 73  2020-05-13  9040.276 9043.207  0.0324166588
+## 74  2020-05-14  9580.258 9617.761  0.3914589406
+## 75  2020-05-15  9515.476 9572.435  0.5985862505
+## 76  2020-05-16  9404.053 9467.233  0.6718439065
+## 77  2020-05-17  9627.188 9709.272  0.8526345023
+## 78  2020-05-18  9717.675 9780.728  0.6488463318
+## 79  2020-05-19  9669.068 9708.174  0.4044397591
+## 80  2020-05-20  9665.833 9701.688  0.3709371498
+## 81  2020-05-21  9276.685 9291.825  0.1632078510
+## 82  2020-05-22  9126.079 9128.772  0.0295094477
+## 83  2020-05-23  9202.351 9209.154  0.0739243427
+## 84  2020-05-24  9113.904 9116.217  0.0253733192
+## 85  2020-05-25  8816.481 8811.851 -0.0525058342
+## 86  2020-05-26  8857.058 8857.343  0.0032146364
+## 87  2020-05-27  9028.932 9043.985  0.1667171474
+## 88  2020-05-28  9324.331 9356.056  0.3402389031
+## 89  2020-05-29  9454.288 9506.124  0.5482815190
+## 90  2020-05-30  9514.885 9573.539  0.6164464245
+## 91  2020-05-31  9545.629 9594.443  0.5113742430
+## 92  2020-06-01  9586.928 9644.987  0.6056134308
+## 93  2020-06-02  9863.836 9948.364  0.8569462917
+## 94  2020-06-03  9550.819 9588.428  0.3937707497
+## 95  2020-06-04  9699.718 9740.326  0.4186547805
+## 96  2020-06-05  9738.626 9781.753  0.4428385192
+## 97  2020-06-06  9637.724 9677.236  0.4099775175
+## 98  2020-06-07  9621.587 9657.436  0.3725852008
+## 99  2020-06-08  9719.832 9752.112  0.3321102231
+## 100 2020-06-09  9707.715 9752.783  0.4642498700
+## 101 2020-06-10  9782.153 9819.008  0.3767632380
+## 102 2020-06-11  9631.700 9657.772  0.2706918013
+## 103 2020-06-12  9418.057 9424.724  0.0707860093
+## 104 2020-06-13  9427.099 9439.257  0.1289721667
+## 105 2020-06-14  9406.462 9417.371  0.1159663724
+## 106 2020-06-15  9246.889 9250.396  0.0379256687
+## 107 2020-06-16  9493.174 9496.268  0.0325965222
+## 108 2020-06-17  9445.114 9445.307  0.0020439728
+## 109 2020-06-18  9411.035 9416.849  0.0617773609
+## 110 2020-06-19  9333.233 9333.763  0.0056697036
+## 111 2020-06-20  9307.226 9308.308  0.0116247784
+## 112 2020-06-21  9353.668 9357.371  0.0395863714
+## 113 2020-06-22  9487.619 9492.979  0.0564917496
+## 114 2020-06-23  9638.064 9642.812  0.0492693467
+## 115 2020-06-24  9440.776 9440.303 -0.0050166543</code></pre>
+</div>
+</div>
+<div id="converting-the-quarter-basis-to-the-annual-basis-1" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Converting the quarter basis to the annual basis:</h2>
+<pre><code>##           date perpetual   future       basis
+## 1   2021-03-13  58837.19 65607.13 -46.9937758
+## 2   2021-03-14  60415.69 68113.24 -45.4590295
+## 3   2021-03-15  57405.63 63710.69 -46.9166506
+## 4   2021-03-16  55340.70 60941.50 -47.4794306
+## 5   2021-03-17  56117.69 61692.35 -47.3661148
+## 6   2021-03-18  58436.68 64563.66 -46.5151699
+## 7   2021-03-19  58292.91 64442.69 -46.1502052
+## 8   2021-03-20  58752.14 65490.80 -44.9303586
+## 9   2021-03-21  57192.35 63208.07 -45.5816066
+## 10  2021-03-22  56683.59 62498.58 -45.5413008
+## 11  2021-03-23  54662.39 59782.02 -46.1340978
+## 12  2021-03-24  55107.92 60598.06 -45.2374945
+## 13  2021-03-25  52066.71 56637.57 -46.1211423
+## 14  2021-03-26  53227.78 57991.71 -45.6499279
+## 15  2021-03-27  55181.18 60212.53 -45.1821276
+## 16  2021-03-28  55829.98 61270.49 -44.2552187
+## 17  2021-03-29  56932.34 62733.69 -43.5101053
+## 18  2021-03-30  58376.52 64857.49 -42.2979790
+## 19  2021-03-31  58643.47 65230.08 -41.8683812
+## 20  2021-04-01  58856.36 65580.52 -41.3753060
+## 21  2021-04-02  59272.81 66345.33 -40.5678571
+## 22  2021-04-03  58899.17 65654.41 -40.7308427
+## 23  2021-04-04  57700.47 63844.57 -41.2517283
+## 24  2021-04-05  58106.08 64554.43 -40.5024580
+## 25  2021-04-06  58440.34 64974.00 -40.1199593
+## 26  2021-04-07  56951.83 62756.76 -40.8073052
+## 27  2021-04-08  57203.42 63161.66 -40.2841155
+## 28  2021-04-09  58201.62 64597.87 -39.4101863
+## 29  2021-04-10  59887.11 67388.72 -37.5737375
+## 30  2021-04-11  59824.67 67285.98 -37.3280432
+## 31  2021-04-12  60116.60 67382.63 -37.4134350
+## 32  2021-04-13  62203.62 70937.63 -35.1590129
+## 33  2021-04-14  63389.98 71638.91 -35.8870061
+## 34  2021-04-15  62870.39 70946.80 -35.7538696
+## 35  2021-04-16  61612.15 69133.41 -36.0925703
+## 36  2021-04-17  61196.76 68402.62 -36.2250912
+## 37  2021-04-18  55831.29 60594.87 -39.1679043
+## 38  2021-04-19  56311.54 61682.12 -37.8627483
+## 39  2021-04-20  55488.04 60973.34 -37.2144438
+## 40  2021-04-21  55366.60 61112.99 -36.4212001
+## 41  2021-04-22  53752.89 59394.88 -36.0038456
+## 42  2021-04-23  49815.97 54300.47 -37.1978697
+## 43  2021-04-24  50009.82 54301.85 -37.3176181
+## 44  2021-04-25  49587.68 53697.99 -37.3110295
+## 45  2021-04-26  53010.45 57845.77 -36.1785428
+## 46  2021-04-27  54527.52 59456.21 -35.9610851
+## 47  2021-04-28  54735.78 59678.87 -35.6691782
+## 48  2021-04-29  53834.62 58674.87 -35.4090329
+## 49  2021-04-30  55271.89 60305.11 -34.9937131
+## 50  2021-05-01  57738.40 63072.18 -34.5621558
+## 51  2021-05-02  56814.59 62002.79 -34.3681828
+## 52  2021-05-03  57866.35 63099.02 -34.1573220
+## 53  2021-05-04  55188.13 59399.37 -35.2692982
+## 54  2021-05-05  55912.26 60628.04 -34.1657375
+## 55  2021-05-06  56885.17 61828.86 -33.6093612
+## 56  2021-05-07  56786.17 61726.07 -33.3008623
+## 57  2021-05-08  58469.29 63790.56 -32.5990308
+## 58  2021-05-09  57910.53 62967.76 -32.6671637
+## 59  2021-05-10  57656.87 62820.57 -32.1440679
+## 60  2021-05-11  55791.38 60498.44 -32.3631110
+## 61  2021-05-12  55824.16 60545.64 -32.0422142
+## 62  2021-05-13  49704.15 52907.81 -33.7545449
+## 63  2021-05-14  50113.40 53379.77 -33.3820527
+## 64  2021-05-15  48796.37 51737.22 -33.5732287
+## 65  2021-05-16  47658.05 50349.27 -33.6530614
+## 66  2021-05-17  44253.62 46495.11 -33.9349085
+## 67  2021-05-18  44124.63 46519.04 -33.2735203
+## 68  2021-05-19  38909.59 40538.45 -34.2137325
+## 69  2021-05-20  39782.01 41167.90 -34.6162746
+## 70  2021-05-21  39045.15 40370.71 -34.4050544
+## 71  2021-05-22  37472.28 38607.14 -34.4714613
+## 72  2021-05-23  34961.55 35822.25 -34.7381366
+## 73  2021-05-24  37000.08 38042.19 -34.0834934
+## 74  2021-05-25  38020.57 39144.91 -33.6428133
+## 75  2021-05-26  39243.82 40434.29 -33.2664686
+## 76  2021-05-27  38758.50 39901.94 -33.0498190
+## 77  2021-05-28  36531.66 37593.85 -32.7924077
+## 78  2021-05-29  35240.52 36229.59 -32.5933704
+## 79  2021-05-30  35487.79 36539.34 -32.1368755
+## 80  2021-05-31  36132.42 37191.56 -31.8687454
+## 81  2021-06-01  36576.99 37689.83 -31.4575364
+## 82  2021-06-02  37277.75 38444.58 -31.0698933
+## 83  2021-06-03  38530.98 39779.99 -30.6584135
+## 84  2021-06-04  37078.21 38233.84 -30.4832700
+## 85  2021-06-05  36527.12 37651.49 -30.2217998
+## 86  2021-06-06  35972.39 37057.79 -29.9826817
+## 87  2021-06-07  35839.64 36895.09 -29.7550737
+## 88  2021-06-08  32840.15 33602.44 -30.0788029
+## 89  2021-06-09  34856.33 35730.35 -29.5925048
+## 90  2021-06-10  36994.78 37981.95 -29.1315980
+## 91  2021-06-11  36997.06 37995.50 -28.8013020
+## 92  2021-06-12  35697.42 36609.01 -28.6463529
+## 93  2021-06-13  36417.23 37372.58 -28.2766501
+## 94  2021-06-14  39675.88 40878.40 -27.5691424
+## 95  2021-06-15  40194.14 41407.13 -27.2821860
+## 96  2021-06-16  39412.41 40494.65 -27.2540586
+## 97  2021-06-17  38606.12 39520.62 -27.3311828
+## 98  2021-06-18  36959.69 37642.67 -27.5520782
+## 99  2021-06-19  35746.37 36324.20 -27.4835026
+## 100 2021-06-20  35067.90 35612.82 -27.2461219
+## 101 2021-06-21  33108.39 33545.35 -27.1802186
+## 102 2021-06-22  32046.13 32427.64 -27.0095069
+## 103 2021-06-23  33741.29 34223.60 -26.4705778
+## 104 2021-06-24  33760.21 34213.69 -26.2567743
+## 105 2021-06-25  33329.26 33763.38 -25.9974784
+## 106 2021-06-26  31521.71 31898.35 -25.8051402
+## 107 2021-06-27  33057.11 33407.01 -25.6415372
+## 108 2021-06-28  34478.88 34887.47 -25.2149464
+## 109 2021-06-29  35555.68 36020.38 -24.7930358
+## 110 2021-06-30  34895.50 35348.61 -24.5015319
+## 111 2021-07-01  33689.27 34071.41 -24.3656749
+## 112 2021-07-02  33303.16 33656.49 -24.1390364
+## 113 2021-07-03  34317.57 34709.01 -23.7593630
+## 114 2021-07-04  35285.13 35696.77 -23.4333889
+## 115 2021-07-05  34062.36 34405.02 -23.2940019
+## 116 2021-07-06  34159.64 34511.62 -22.9696067
+## 117 2021-07-07  34544.99 34922.50 -22.6072061
+## 118 2021-07-08  32865.17 33099.69 -22.6864067
+## 119 2021-07-09  33184.21 33467.76 -22.2455483
+## 120 2021-07-10  33696.93 33966.41 -22.0002674
+## 121 2021-07-11  33806.09 34148.79 -21.4862897
+## 122 2021-07-12  33678.40 34017.60 -21.1928263
+## 123 2021-07-13  32841.59 33132.17 -21.0152056
+## 124 2021-07-14  32461.93 32677.66 -20.9354361
+## 125 2021-07-15  32092.20 32265.58 -20.7597380
+## 126 2021-07-16  31745.91 31937.65 -20.3960027
+## 127 2021-07-17  31569.53 31739.40 -20.1619197
+## 128 2021-07-18  31771.98 31980.01 -19.7452257
+## 129 2021-07-19  31164.35 31263.06 -19.7832480
+## 130 2021-07-20  29822.79 29872.00 -19.6349976
+## 131 2021-07-21  31215.20 31371.50 -18.9992869
+## 132 2021-07-22  32128.43 32302.67 -18.6576930
+## 133 2021-07-23  32496.61 32676.82 -18.3454261
+## 134 2021-07-24  33871.43 34130.30 -17.8357169
+## 135 2021-07-25  34363.75 34640.91 -17.4934572
+## 136 2021-07-26  38311.47 38674.84 -17.0515460
+## 137 2021-07-27  37695.13 38037.70 -16.7911991
+## 138 2021-07-28  39843.52 40222.92 -16.4477713
+## 139 2021-07-29  39836.85 40220.16 -16.1377871
+## 140 2021-07-30  39645.11 40034.31 -15.8183111
+## 141 2021-07-31  41618.75 42064.98 -15.4277985
+## 142 2021-08-01  41435.25 41861.96 -15.1701771
+## 143 2021-08-02  39589.98 39938.50 -15.0196847
+## 144 2021-08-03  38436.07 38736.93 -14.8172464
+## 145 2021-08-04  38728.90 38973.72 -14.6678762
+## 146 2021-08-05  39420.44 39712.41 -14.2593450
+## 147 2021-08-06  41367.82 41666.91 -13.9769977
+## 148 2021-08-07  43539.59 43868.40 -13.6448157
+## 149 2021-08-08  44289.73 44628.05 -13.3361204
+## 150 2021-08-09  44891.00 45241.18 -13.0199316
+## 151 2021-08-10  45588.53 45927.29 -12.7569342
+## 152 2021-08-11  46068.62 46413.01 -12.4524346
+## 153 2021-08-12  44884.97 45186.62 -12.2279581
+## 154 2021-08-13  46192.46 46638.24 -11.6349488
+## 155 2021-08-14  47066.71 47428.71 -11.5308671
+## 156 2021-08-15  46395.65 46667.58 -11.4138938
+## 157 2021-08-16  46896.65 47221.07 -11.0082247
+## 158 2021-08-17  45945.58 46196.02 -10.8549024
+## 159 2021-08-18  45130.37 45359.59 -10.5921073
+## 160 2021-08-19  45237.97 45482.17 -10.2602034
+## 161 2021-08-20  47807.33 48147.87  -9.7876761
+## 162 2021-08-21  49027.56 49371.61  -9.4982424
+## 163 2021-08-22  48867.28 49188.55  -9.2425788
+## 164 2021-08-23  49868.27 50234.83  -8.8649496
+## 165 2021-08-24  48877.52 49152.67  -8.7370537
+## 166 2021-08-25  48257.37 48514.24  -8.4676970
+## 167 2021-08-26  47308.04 47474.07  -8.3490466
+## 168 2021-08-27  47730.27 47909.02  -8.0255026
+## 169 2021-08-28  48868.03 49104.91  -7.6152619
+## 170 2021-08-29  48609.14 48811.28  -7.3841475
+## 171 2021-08-30  48054.01 48241.60  -7.1096406
+## 172 2021-08-31  47295.82 47457.46  -6.8582356
+## 173 2021-09-01  47684.79 47879.00  -6.4927218
+## 174 2021-09-02  49646.71 49922.30  -6.0449060
+## 175 2021-09-03  49899.22 50153.23  -5.7909545
+## 176 2021-09-04  50043.59 50275.99  -5.5356076
+## 177 2021-09-05  50354.38 50598.37  -5.2154620
+## 178 2021-09-06  51763.85 52068.74  -4.8109977
+## 179 2021-09-07  49794.89 49870.07  -4.9490134
+## 180 2021-09-08  46260.85 46351.22  -4.6046494
+## 181 2021-09-09  46406.79 46478.23  -4.3460624
+## 182 2021-09-10  45893.12 45956.17  -4.0626277
+## 183 2021-09-11  45379.95 45455.62  -3.7332393
+## 184 2021-09-12  45627.06 45701.53  -3.4367897
+## 185 2021-09-13  44828.01 44882.74  -3.1779037
+## 186 2021-09-14  46069.53 46138.99  -2.8492225
+## 187 2021-09-15  47559.64 47650.06  -2.5098887
+## 188 2021-09-16  47850.01 47928.76  -2.2354145
+## 189 2021-09-17  47555.74 47607.65  -1.9908415
+## 190 2021-09-18  48234.25 48279.10  -1.7070192
+## 191 2021-09-19  47700.14 47750.38  -1.3946914
+## 192 2021-09-20  44580.83 44566.13  -1.2329676
+## 193 2021-09-21  42430.44 42421.92  -0.9200819</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-sources.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-transformation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/boquanSun/btcStrategy/edit/main/02-data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/boquanSun/btcStrategy/blob/main/02-data.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
