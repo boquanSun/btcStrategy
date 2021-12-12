@@ -1,1 +1,99 @@
 # Results
+
+We mainly explore basis trading from three different aspects: funding rate, basis, macro trend
+
+## Funding Rate
+We mainly explore funding rate by fear index and the number of consecutive days of fear(greed) market
+```{r}
+library(knitr)
+library(ggplot2)  
+library(png)  
+path <- "./figures/Result/funding_histogram.png"
+include_graphics(path)
+```
+### Fear Index vs Funding Rate
+
+```{r}
+path <- "./figures/Result/fear_funding.png"
+include_graphics(path)
+```
+Clear linear relationship
+
+### Consecutive extreme market days vs funding rate
+
+####Consecutive Fear days vs funding rate
+```{r}
+path <- "./figures/Result/Consecutive_fear_funding.png"
+include_graphics(path)
+```
+Not so obvious, but still can see longer days, lower funding rate
+
+### Consecutive greed days vs funding rate
+
+```{r}
+path <- "./figures/Result/Consecutive_greed_funding.png"
+include_graphics(path)
+```
+
+Not so obvious, but still can see longer days, larger funding rate
+
+
+## Basis
+The main idea of our trading strategy is to predict is the basis is on bottom or top. We explore basis from three different aspects: fear index, annual Basis and Volatility. 
+
+### Fear index vs Basis
+```{r}
+path <- "./figures/Result/200626_exp.png"
+include_graphics(path)
+```
+
+```{r}
+path <- "./figures/Result/200925_exp.png"
+include_graphics(path)
+```
+
+```{r}
+path <- "./figures/Result/201225_exp.png"
+include_graphics(path)
+```
+
+
+```{r}
+path <- "./figures/Result/210326_exp.png"
+include_graphics(path)
+```
+
+```{r}
+path <- "./figures/Result/volatility_histogram.png"
+include_graphics(path)
+```
+## Model:
+
+
+### Run Model
+Base on our model, we can tell you the right point to open the position (without info leaking)
+
+```{r}
+path <- "./figures/Result/strategy_decision_200626.png"
+include_graphics(path)
+```
+
+```{r}
+path <- "./figures/Result/strategy_decision_200925.png"
+include_graphics(path)
+```
+
+```{r}
+path <- "./figures/Result/strategy_decision_201225.png"
+include_graphics(path)
+```
+
+```{r}
+path <- "./figures/Result/strategy_decision_210326.png"
+include_graphics(path)
+```
+
+```{r}
+path <- "./figures/Result/strategy_decision_210924.png"
+include_graphics(path)
+```
