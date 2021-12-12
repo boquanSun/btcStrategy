@@ -1,1 +1,127 @@
 # Missing values
+
+As data currently involved in our project is gained from mature interface, they have no missing value and we choose to analyze missing values in  `Avengers` of package "fivethirtyeight" and utilize the `plot_missing` function base on it. 
+
+```{r}
+library(fivethirtyeight)
+library(tidyverse)
+library(patchwork)
+
+plot_missing <- function(mycars,percent) {
+  
+  tidycars <- mycars %>% 
+    rownames_to_column("id") %>% 
+    gather(key, value, -id) %>% 
+    mutate(missing = ifelse(is.na(value), "yes", "no"))
+  
+   missing_patterns <- data.frame(is.na(mycars)) %>%
+    group_by_all() %>%
+    count(name = "count", sort = TRUE) %>%
+    ungroup() 
+   
+   missing_patterns$cnt = rowSums(missing_patterns[,-ncol(missing_patterns)])
+   missing_patterns <- missing_patterns %>%
+    mutate(miss = ifelse(cnt == 0, 1, 0))
+  
+  missing_patterns_id <- data.frame(is.na(mycars)) %>%
+    colSums() %>%
+    sort(decreasing =  TRUE)
+  
+  patterns <- missing_patterns %>% 
+      rownames_to_column('id') %>% 
+      gather(key, value, -id)
+  
+  miss_p <- patterns %>%
+    filter(key == 'miss')
+  
+  count_p <- patterns %>%
+    filter(key == 'count')
+  
+  p = patterns %>%
+    filter(key != 'count') %>%
+    filter(key != 'cnt') %>%
+    filter(key != 'miss') %>%
+    mutate(missing = ifelse(value == 0, 1,0))
+  
+  for(i in 1:nrow(p) ){
+    for(j in 1:nrow(miss_p)){
+      if (miss_p$id[j] == p$id[i]){
+        p$missing[i] = p$missing[i] + miss_p$value[j]
+        p$value[i] = p$value[i] * count_p$value[j]
+      }
+    }
+  }
+  
+  p$id <- as.integer(p$id)
+  p$id <- format(p$id,width=3,justify = 'right')
+  p$id <- as.factor(p$id)
+  p$missing <- as.factor( p$missing)
+  g1 <- ggplot(p, aes(x = fct_reorder(key, -value, sum), y = fct_rev(id), fill = missing)) +
+    geom_tile(color = "white") + 
+    scale_fill_manual(values = c(alpha('purple',1), alpha('grey',0.5),alpha('grey',1))) +
+    theme_bw() +
+    theme(legend.position = 'None', axis.text.x = element_text(angle = 60, hjust = 1)) +
+    labs(x='variable',y='missing pattern')
+  
+  if(percent == TRUE) {
+    missing_patterns$ID <- seq.int(nrow(missing_patterns))
+    missing_patterns$row_missing_percent<- missing_patterns$count/nrow(mycars)
+    
+    g2 <- ggplot(missing_patterns,aes(x=ID,y=row_missing_percent)) + 
+      geom_col() +
+      theme_bw() +
+      coord_flip() +
+      scale_x_reverse() +
+      labs(y = '% row',x='')
+  }
+  else{
+    missing_patterns$ID <- seq.int(nrow(missing_patterns))
+    g2 <- ggplot(missing_patterns,aes(x=ID,y=count)) + 
+      geom_col() +
+      theme_bw() +
+      coord_flip() +
+      scale_x_reverse() +
+      labs(y = 'num of row',x='')
+    
+  }
+  if(percent == TRUE){
+    tidycars <- tidycars %>% 
+    mutate(missing2 = ifelse(missing == "yes", 1/nrow(mycars), 0))
+  g3 <- ggplot(tidycars,aes(x = fct_reorder(key, -missing2, sum) , y = missing2)) + 
+    geom_col() +
+    scale_x_discrete(drop=FALSE) +
+    labs(y = '% row missing',x = '') +
+    theme(axis.text.x = element_text(angle = 60, hjust = 1))
+  } else{
+    tidycars <- tidycars %>% 
+    mutate(missing2 = ifelse(missing == "yes", 1, 0))
+  g3 <- ggplot(tidycars,aes(x = fct_reorder(key, -missing2, sum) , y = missing2)) + 
+    geom_col() +
+    scale_x_discrete(drop=FALSE) +
+    labs(y = 'num of row missing',x = '') +
+    theme(axis.text.x = element_text(angle = 60, hjust = 1))
+  }
+  
+  
+  design <- "
+   1#
+   23
+  "
+  g3+g1+g2 + plot_layout(design = design)
+}
+
+```
+
+Displayed in terms of percemtage:
+```{r}
+plot_missing(avengers, percent = TRUE)
+
+```
+
+Displayed in original count:
+```{r}
+plot_missing(avengers, percent = FALSE)
+
+```
+
+As we can see, in this `avengers` data set, only few data is totally complete and missing values are concentrated in some specific attributes columns, including most `death` and `return`. Meanwhile, there is no missing values in some other columns like `current`, `year`, `gender` and so on. In other words, we can say that the missing patterns of this data set are similar and regular. Among the whole data set, avengers miss approximately half of attributes data listed in x-axis of plots. 
