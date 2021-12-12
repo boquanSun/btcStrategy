@@ -45,3 +45,9 @@ future-market-price
 on-chain-data-set
 fundmental-dataset
 crawling-datasets-1
+funding-rate-2
+consecutive-extreme-market-days-vs-funding-rate
+consecutive-greed-days-vs-funding-rate
+basis
+fear-index-vs-basis
+run-model
