@@ -1,23 +1,260 @@
 # Results
-
-We mainly explore basis trading from three different aspects: funding rate, basis, macro trend
-
-## Funding Rate
-We mainly explore funding rate by fear index and the number of consecutive days of fear(greed) market
 ```{r}
+library(tidyverse)
 library(knitr)
 library(ggplot2)  
-library(png)  
-path <- "./figures/Result/funding_histogram.png"
-include_graphics(path)
+library(png) 
 ```
-### Fear Index vs Funding Rate
+
+## Basis trading return
+
+Trading return is cared most. Basis trading return consists of two parts: earn/loss from funding rate, earn/loss from basis. 
+
+
+Funding rate: as we mentioned in the introduction, funding rate is extremely important in the basis trading. The main idea of the basis trading is hedging, thus we have to open long positions and short positions at the same time. In order to add leverage, we would use the perpetual swap. Thus, the accumulation of funding rate with high leverage would be a huge number.
+
+Basis: as we mentioned in the introduction, basis is the ratio of price difference between future swap and perpetual swap. It is calculated by (future swap price - perpetual swap price) / perpetual swap price.
+
+When hedging, we open long basis positions or short basis positions. There, funding rates are unknown variables, but the basis is known. Long basis means we would lose money when basis is decreasing and earn money when funding rate is positive. When we have a short basis, we have to pay when the funding rate is positive but profit after the basis decreases. 
+
+Look at how the basis and funding rate relate under different kinds of market conditions. We defined "BTC contract 210924" as bear market condition and "BTC contract 210326" as bull market.
+
+### funding rate vs basis
+```{r fig3, fig.width = 5, fig.asp = .62}
+
+library(Rmisc)
+df <- read.csv('./preprocess//bear_basis.csv')
+df$date = as.Date(df$date)
+
+df$re_funding = df$fundingRate*100
+fd_label = seq(-0.3,0.5,0.1)
+fd_label[4] = 0
+
+df2 <-read.csv('./preprocess//bull_basis.csv')
+df2$date = as.Date(df2$date)
+
+df2$re_funding = df2$fundingRate*100
+
+
+
+F1 <- ggplot(df) + 
+  geom_col(aes(x = date, y = re_funding*30), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = basis), size = 1.5, color="Black", group = 1) +
+  ylab("% Basis")+ ggtitle("Bear Market") + 
+  scale_y_continuous(sec.axis = sec_axis(~./30, name = "Funding Rate",
+                                         breaks = fd_label,
+                                           labels=paste(fd_label,"%",sep="")))  +
+    theme(axis.line.y.right = element_line(color = "red"), 
+        axis.ticks.y.right = element_line(color = "red"),
+        axis.text.y.right = element_text(color = "red"), 
+        axis.title.y.right = element_text(color = "red")
+        ) +     geom_text(aes(x=as.Date("2021-04-01"),y=-2.5,label='Funding Rate'),color='red') +
+    geom_text(aes(x=as.Date(as.Date("2021-04-01")),y=13,label='Basis'))
+
+F2 <- ggplot(df2) + 
+  geom_col(aes(x = date, y = re_funding*30), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = basis), size = 1.5, color="Black", group = 1) +
+  ylab("% Basis")+ ggtitle("Bull Market") + 
+  scale_y_continuous(sec.axis = sec_axis(~./30, name = "Funding Rate",
+                                         breaks = fd_label,labels=paste(fd_label,"%",sep=""))) +
+  theme(axis.line.y.right = element_line(color = "red"), 
+        axis.ticks.y.right = element_line(color = "red"),
+        axis.text.y.right = element_text(color = "red"), 
+        axis.title.y.right = element_text(color = "red")
+        ) +
+   geom_text(aes(x=as.Date("2021-01-01"),y=-1,label='Funding Rate'),color='red') +
+    geom_text(aes(x=as.Date(as.Date("2020-12-01")),y=5,label='Basis'))
+multiplot(F1, F2, cols = 1)
+```
+
+
+The higher funding rate accompanies a high basis. Also, as mentioned in the introduction, the value of basis is highly related to the remaining days of the contract. Even though the funding fee is extremely high at the tail of the contract, the basis would still gradually converge to zero. 
+
+
+### accumulation of funding rate vs basis
+
+The accumulation of funding rate is calculated as the sum of funding rate from today until the expiration date. It directly represents how much we have to pay/earn for the basis
+```{r}
+df$re_ac_funding = df$accumulation_funding_rate*100
+df2$re_ac_funding = df2$accumulation_funding_rate*100
+F1 <- ggplot(df) + 
+  geom_col(aes(x = date, y = re_ac_funding), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = basis), size = 1.5, color="Black", group = 1) +
+  ylab("% Basis")+ ggtitle("Bear Market") + 
+  scale_y_continuous(sec.axis = sec_axis(~., name = "$ Accumulated Funding Rate")) +
+  theme(axis.line.y.right = element_line(color = "red"), 
+        axis.ticks.y.right = element_line(color = "red"),
+        axis.text.y.right = element_text(color = "red"), 
+        axis.title.y.right = element_text(color = "red")
+        )
+
+F2 <- ggplot(df2) + 
+  geom_col(aes(x = date, y = re_ac_funding), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = basis), size = 1.5, color="Black", group = 1) +
+  ylab("% Basis")+ ggtitle("Bull Market") + 
+  scale_y_continuous(sec.axis = sec_axis(~., name = "% Accumulated funding Rate"))+
+  theme(axis.line.y.right = element_line(color = "red"), 
+        axis.ticks.y.right = element_line(color = "red"),
+        axis.text.y.right = element_text(color = "red"), 
+        axis.title.y.right = element_text(color = "red")
+        )
+
+multiplot(F1, F2, cols = 1)
+```
+In bull market, the accumulation of funding rate never lower than basis. However, the sudden drop suddenly of price would led serious loss in bear market. 
+
+### Trading Return 
+```{r}
+df$earned = df$accumulation_funding_rate*100 - df$basis
+df2$earned = df2$accumulation_funding_rate*100 - df$basis
+F1 <- ggplot(df) + 
+  geom_col(aes(x = date, y = earned), size = 1, color = "red", fill = "red") +
+  ylab("% return")+ ggtitle("Basis Trading Return in Bear Market")
+
+
+F2 <- ggplot(df2) + 
+  geom_col(aes(x = date, y = earned), size = 1, color = "red", fill = "red") +
+  ylab("% return")+ ggtitle("Basis Trading Return in Bull Market")
+ 
+
+multiplot(F1, F2, cols = 1)
+```
+From the figures, we know that if we open the basis trading position randomly, the return highly depends on the market
+
+
+## How does the market emotion affect the Funding Rate?
+
+Funding rates are periodic payments between traders to make the perpetual futures contract price is close to the index price. It is a result of market behaviors and could be used to maker some interpretation in the derivative market which also is a dominant price maker in the market. In the bull market, it have a tendency to naturally bring high funding rates with price rise. 
+
+fear-and-greed index was produced analyzing the current sentiment of the Bitcoin market and crunch the numbers into a simple meter from 0 to 100. Zero means "Extreme Fear", while 100 means "Extreme Greed".
 
 ```{r}
-path <- "./figures/Result/fear_funding.png"
-include_graphics(path)
+df <- read.csv('./preprocess//funding_fear.csv')
+ggplot(df, aes(x=fear, y=fundingRate)) +
+  geom_point() + geom_smooth(formula = y ~ x, method=lm) +
+  xlab('Fear index') + ylab("Average funding rate")
+
 ```
-Clear linear relationship
+In the figure, the x-axis is the value of fear index, the y-axis is the average funding rate group by fear index. There are more than 480 samples in data set. R-square is more 7.7 and the figure shows the strong linear relationship between fear index and funding rate. Thus, we can tell the strong positive correlation between fear index and funding rate. The greedy the market is, the higher funding rate would be.
+
+
+## How does the market emotion affect the basis?
+
+### Fear and Greed index
+
+
+```{r}
+df <- read.csv('./preprocess//bear_basis.csv')
+df2 <- read.csv('./preprocess//bull_basis.csv')
+df$date = as.Date(df$date)
+df2$date = as.Date(df2$date)
+df$re_fear = df$fear /10
+df2$re_fear = df2$fear /10
+F1 <- ggplot(df) + 
+  geom_line(aes(x = date, y = basis), size = 1.5, color="Black", group = 1) +
+  geom_line(aes(x = date, y = re_fear), size = 1, color='Blue') +
+  ylab("% Basis(fear 50 = basis 8%)")+ ggtitle("Bear Market") +
+  geom_text(aes(x=as.Date("2021-08-20"),y=9,label='fear Index'),color='blue') +
+  geom_text(aes(x=as.Date("2021-08-20"),y=2,label='Basis'))
+
+
+F2 <- ggplot(df2) + 
+  geom_line(aes(x = date, y = basis), size = 1.5, color="Black", group = 1) +
+  geom_line(aes(x = date, y = re_fear), size = 1, color='Blue') +
+  ylab("% Basis(fear 50 = basis 8%)")+ ggtitle("Bull Market") + 
+  geom_text(aes(x=as.Date("2021-01-15"),y=10,label='fear Index'),color='blue') +
+  geom_text(aes(x=as.Date("2021-01-15"),y=2,label='Basis'))
+
+
+multiplot(F1, F2, cols = 1)
+```
+
+### Volaility vs Trading Return 
+
+```{r}
+F1 <- ggplot(df) + 
+  geom_col(aes(x = date, y = fear / 10), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = earned), size = 1.5, color="Black", group = 1) +
+  ylab("% Basis")+ ggtitle("Bear Market") + 
+  scale_y_continuous(sec.axis = sec_axis(~./10, name = "$ earned")) +
+  theme(axis.line.y.right = element_line(color = "red"), 
+        axis.ticks.y.right = element_line(color = "red"),
+        axis.text.y.right = element_text(color = "red"), 
+        axis.title.y.right = element_text(color = "red")
+        )
+
+F2 <- ggplot(df2) + 
+  geom_col(aes(x = date, y = fear / 10), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y =earned ), size = 1.5, color="Black", group = 1) +
+  ylab("% Basis")+ ggtitle("Bull Market") + 
+  scale_y_continuous(sec.axis = sec_axis(~./10, name = "% earned"))+
+  theme(axis.line.y.right = element_line(color = "red"), 
+        axis.ticks.y.right = element_line(color = "red"),
+        axis.text.y.right = element_text(color = "red"), 
+        axis.title.y.right = element_text(color = "red")
+        )
+
+multiplot(F1, F2, cols = 1)
+```
+
+```{r}
+F1 <- ggplot(df) + 
+  geom_col(aes(x = date, y = Volatility/10), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = earned), size = 1.5, color="Black", group = 1) +
+  ylab("% Basis")+ ggtitle("Bear Market") + 
+  scale_y_continuous(sec.axis = sec_axis(~./10, name = "$ Accumulated Funding Rate")) +
+  theme(axis.line.y.right = element_line(color = "red"), 
+        axis.ticks.y.right = element_line(color = "red"),
+        axis.text.y.right = element_text(color = "red"), 
+        axis.title.y.right = element_text(color = "red")
+        )
+
+F2 <- ggplot(df2) + 
+  geom_col(aes(x = date, y = Volatility/5), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y =earned ), size = 1.5, color="Black", group = 1) +
+  ylab("% Basis")+ ggtitle("Bull Market") + 
+  scale_y_continuous(sec.axis = sec_axis(~./5, name = "% Accumulated funding Rate"))+
+  theme(axis.line.y.right = element_line(color = "red"), 
+        axis.ticks.y.right = element_line(color = "red"),
+        axis.text.y.right = element_text(color = "red"), 
+        axis.title.y.right = element_text(color = "red")
+        )
+
+multiplot(F1, F2, cols = 1)
+```
+
+### 
+
+```{r}
+ggplot() +
+   geom_histogram(data = df, 
+        aes(Volatility))
+````
+However, the correlation between fear index and basis is not that obvious due to the expiration date of contract. As mentioned in the introduction, the value of basis is highly related to the remaining days of the contract.
+
+From the Figures, we can tell that the sudden drop of the fear index would not be a 
+
+
+
+
+
+
+Market Emotion: we use fear & greed index and funding rate to represent the market emotion. Fear index are designed to quantify the market emotion. 
+
+Calibrated basis: calibrated basis is calculate by basis / days remaining * 365. It is named "annual basis". Annual basis eliminates the impact from expiration date and can be used to compare current basis with history basis. 
+
+Volatility: volatility is the degree of variation of a trading price series over time. We assume when the volatility is extreme high, many position in crypto market would be liquidated which would lead to extreme basis. 
+
+
+
+
+
+
+
+
+
+
+
 
 ### Consecutive extreme market days vs funding rate
 

@@ -51,3 +51,6 @@ consecutive-greed-days-vs-funding-rate
 basis
 fear-index-vs-basis
 run-model
+how-does-the-market-emotion-affect-the-funding-rate
+how-does-the-changes-in-market-affect-basis
+fear-and-greed-index
