@@ -1,29 +1,37 @@
 # Interactive component
 
 ```{r}
+library(dplyr)
+library(tidyverse)
 Calculate_Basis <- function(perp,future,s) {
-  future$price = (future$high + future$low +future$close)/3
-  future$date = as.Date(future$time)
-  future = future%>%
-    group_by(date) %>%
-    summarise_all(first)
-  future <- future[, c('date', 'price')]
-  basis_df = merge(perp,future,by.x = "date", by.y= "date")
-  names(basis_df)[2] <- 'perpetual'
-  names(basis_df)[3] <- 'future'
-  basis_df$basis <- (basis_df$future - basis_df$perpetual)/basis_df$perpetual * 100
+
+  basis_df = merge(perp,future,by.x = "time", by.y= "time")
+  
+  basis_df$open = (basis_df$open.y - basis_df$open.x)/basis_df$open.x * 100
+  basis_df$low = (basis_df$low.y - basis_df$low.x)/basis_df$low.x * 100
+  basis_df$high = (basis_df$high.y - basis_df$high.x)/basis_df$high.x * 100
+  basis_df$close = (basis_df$close.y - basis_df$close.x)/basis_df$close.x * 100
+  basis_df$date = as.Date(basis_df$time)
+  basis_df <- basis_df[, c('date', 'open','close','low','high')]
+  
+  basis_df = basis_df%>%
+  group_by(date) %>%
+  summarise_all(list(min,max,first,last))
+  
+  basis_df <- basis_df[, c('date', 'open_fn4','close_fn3','low_fn1','high_fn2')]
+  names(basis_df)[2] <- 'open'
+  names(basis_df)[3] <- 'close'
+  names(basis_df)[4] <- 'low'
+  names(basis_df)[5] <- 'high'
   return (basis_df)
 }
 ```
 
 ```{r}
 df <- read.csv('./edav_onchaindata/BTC-USDT.csv')
-df$price = (df$high + df$low +df$close)/3
-df$date = as.Date(df$time)
-btc_perp = df%>%
-  group_by(date) %>%
-  summarise_all(first)
-btc_perp <- btc_perp[, c('date', 'price')]
+df$date = df$time
+btc_perp = df
+
 
 library(hash)
 future_dir = './edav_onchaindata/future-swap'
@@ -32,10 +40,16 @@ names = list.files(future_dir)
 
 futures <- hash()
 
+
+
 for(name in names){
+  
   future_path = paste(future_dir,name,sep='/')
   future <- read.csv(future_path)
-
+  future$price = (future$high + future$low +future$close)/3
+  future$date = future$time
+  basis_s = merge(btc_perp,future,by.x = "time", by.y= "time")
+  
   m = Calculate_Basis(btc_perp, future, name)
   last_row = nrow(m) - 2
   m <- m %>% slice( 3: last_row)
@@ -48,91 +62,14 @@ delivery_times = c("2020-06-26", "2020-09-25", "2020-12-25", "2021-03-26",
 delivery_times = as.Date(delivery_times)
 keys = keys(futures)
 
-for (i in 1:8) {
-  delivery_time = delivery_times[i]
-  futures[[keys[i]]]$annual_basis <- (futures[[keys[i]]]$basis / as.numeric(delivery_time - futures[[keys[i]]]$date)) * 365
-}
+
 ```
 
 ```{R}
-tem = futures[[keys[4]]]
-tem$aa = 1
+for (i in 1:8) {
+  tem = futures[[keys[i]]]
+  write_csv(tem,paste(format(delivery_times[i]),'_basis.csv'))
+}
 ```
 
-```{d3 data=tem, options=list(color = 'orange')}
-// set up constants used throughout script
-const margin = {top: 80, right: 100, bottom: 40, left: 60}
-const plotWidth = 1200 - margin.left - margin.right
-const plotHeight = 600 - margin.top - margin.bottom
 
-const lineWidth = 3
-const mediumText = 18
-const bigText = 28
-
-// set width and height of svg element (plot + margin)
-svg.attr("width", plotWidth + margin.left + margin.right)
-   .attr("height", plotHeight + margin.top + margin.bottom)
-   
-// create plot group and move it
-let plotGroup = svg.append("g")
-                   .attr("transform",
-                         "translate(" + margin.left + "," + margin.top + ")")
-      
-// x-axis values to year range in data
-// x-axis goes from 0 to width of plot
-let xAxis = d3.scaleTime()
-    .domain(d3.extent(data, d => { return new Date(d.date); }))
-    .range([ 0, plotWidth ]);
-    
-// y-axis values to cumulative caught range
-// y-axis goes from height of plot to 0
-let yAxis = d3.scaleLinear()
-    .domain(d3.extent(data, d => { return d.basis; }))
-    .range([ plotHeight, 0]);
-    
-// add x-axis to plot
-// move x axis to bottom of plot (height)
-// format tick values as date (no comma in e.g. 2,001)
-// set stroke width and font size
-plotGroup.append("g")
-   .attr("transform", "translate(0," + plotHeight + ")")
-   .call(d3.axisBottom(xAxis).tickFormat(d3.timeFormat("%Y-%m-%d")))
-   .attr("stroke-width", lineWidth)
-   .attr("font-size", 12);
-
-// add y-axis to plot
-// set stroke width and font size
-plotGroup.append("g")
-    .call(d3.axisLeft(yAxis))
-    .attr("stroke-width", lineWidth)
-    .attr("font-size", mediumText);
-  
-svg.selectAll(".xaxis text")  // select all the text elements for the xaxis
-          .attr("transform", function(d) {
-              return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
-        });
-  
-  
-let nestedData = d3.nest()
-    .key(d => { return d.aa;})
-    .entries(data);
-    
-let path = plotGroup.selectAll(".drawn_lines")
-    .data(nestedData)
-    .enter()
-    .append("path")
-    // set up class so only this path element can be removed
-    .attr("class", "drawn_lines")
-    .attr("fill", "none")
-    // color of lines from hex codes in data
-    .attr("stroke", "black") 
-    .attr("stroke-width", lineWidth)
-     // draw line according to data
-    .attr("d", d => {
-      return d3.line()
-        .x(d => { return xAxis(new Date(d.date));})
-        .y(d => { return yAxis(d.basis);})
-        (d.values)
-    })
-
-```
