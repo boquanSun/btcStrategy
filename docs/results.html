@@ -118,18 +118,21 @@
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#how-does-the-market-emotion-affect-the-funding-rate"><i class="fa fa-check"></i><b>5.1</b> How does the market emotion affect the Funding Rate?</a></li>
-<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#how-does-the-changes-in-market-affect-basis"><i class="fa fa-check"></i><b>5.2</b> How does the changes in market affect basis?</a>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#how-does-the-basis-trading-return-look-like"><i class="fa fa-check"></i><b>5.1</b> How does the basis trading return look like?</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#funding-rate-2"><i class="fa fa-check"></i><b>5.2.1</b> Funding Rate</a></li>
-<li class="chapter" data-level="5.2.2" data-path="results.html"><a href="results.html#fear-and-greed-index"><i class="fa fa-check"></i><b>5.2.2</b> Fear and Greed index</a></li>
-<li class="chapter" data-level="5.2.3" data-path="results.html"><a href="results.html#consecutive-extreme-market-days-vs-funding-rate"><i class="fa fa-check"></i><b>5.2.3</b> Consecutive extreme market days vs funding rate</a></li>
-<li class="chapter" data-level="5.2.4" data-path="results.html"><a href="results.html#consecutive-greed-days-vs-funding-rate"><i class="fa fa-check"></i><b>5.2.4</b> Consecutive greed days vs funding rate</a></li>
+<li class="chapter" data-level="5.1.1" data-path="results.html"><a href="results.html#funding-rate-vs-basis"><i class="fa fa-check"></i><b>5.1.1</b> funding rate vs basis</a></li>
+<li class="chapter" data-level="5.1.2" data-path="results.html"><a href="results.html#accumulation-of-funding-rate-vs-basis"><i class="fa fa-check"></i><b>5.1.2</b> accumulation of funding rate vs basis</a></li>
+<li class="chapter" data-level="5.1.3" data-path="results.html"><a href="results.html#trading-return"><i class="fa fa-check"></i><b>5.1.3</b> Trading Return</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#basis"><i class="fa fa-check"></i><b>5.3</b> Basis</a>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#how-does-the-market-changes-affect-the-basis-trading-return"><i class="fa fa-check"></i><b>5.2</b> How does the market changes affect the basis trading return?</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="results.html"><a href="results.html#fear-index-vs-basis"><i class="fa fa-check"></i><b>5.3.1</b> Fear index vs Basis</a></li>
-<li class="chapter" data-level="5.3.2" data-path="results.html"><a href="results.html#run-model"><i class="fa fa-check"></i><b>5.3.2</b> Run Model</a></li>
+<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#market-emotion"><i class="fa fa-check"></i><b>5.2.1</b> Market emotion</a></li>
+<li class="chapter" data-level="5.2.2" data-path="results.html"><a href="results.html#volatility-vs-trading-return"><i class="fa fa-check"></i><b>5.2.2</b> Volatility vs Trading Return</a></li>
+<li class="chapter" data-level="5.2.3" data-path="results.html"><a href="results.html#anuual-basis-vs-return-per-risk"><i class="fa fa-check"></i><b>5.2.3</b> Anuual basis vs return per risk</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#model"><i class="fa fa-check"></i><b>5.3</b> Model:</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="results.html"><a href="results.html#run-model"><i class="fa fa-check"></i><b>5.3.1</b> Run Model</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -155,65 +158,70 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
-<div id="how-does-the-market-emotion-affect-the-funding-rate" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> How does the market emotion affect the Funding Rate?</h2>
-<p>Funding rates are periodic payments between traders to make the perpetual futures contract price is close to the index price. It is a result of market behaviors and could be used to maker some interpretation in the derivative market which also is a dominant price maker in the market. In the bull market, it have a tendency to naturally bring high funding rates with price rise.</p>
-<p>fear-and-greed index was produced analyzing the current sentiment of the Bitcoin market and crunch the numbers into a simple meter from 0 to 100. Zero means “Extreme Fear”, while 100 means “Extreme Greed”.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-3-1.png" width="672" />
-In the figure, the x-axis is the value of fear index, the y-axis is the average funding rate group by fear index. There are more than 480 samples in data set. R-square is more 7.7 and the figure shows the strong linear relationship between fear index and funding rate. Thus, we can tell the strong positive correlation between fear index and funding rate. The greedy the market is, the higher funding rate would be.</p>
+<div id="how-does-the-basis-trading-return-look-like" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> How does the basis trading return look like?</h2>
+<p>Trading return is cared most. Basis trading return consists of two parts: earn/loss from funding rate, earn/loss from basis.</p>
+<p>Funding rate: as we mentioned in the introduction, funding rate is extremely important in the basis trading. The main idea of the basis trading is hedging, thus we have to open long positions and short positions at the same time. In order to add leverage, we would use the perpetual swap. Thus, the accumulation of funding rate with high leverage would be a huge number.</p>
+<p>Basis: as we mentioned in the introduction, basis is the ratio of price difference between future swap and perpetual swap. It is calculated by (future swap price - perpetual swap price) / perpetual swap price.</p>
+<p>When hedging, we open long basis positions or short basis positions. There, funding rates are unknown variables, but the basis is known. Long basis means we would lose money when basis is decreasing and earn money when funding rate is positive. When we have a short basis, we have to pay when the funding rate is positive but profit after the basis decreases.</p>
+<p>Look at how the basis and funding rate relate under different kinds of market conditions. We defined “BTC contract 210924” as bear market condition and “BTC contract 210326” as bull market.</p>
+<div id="funding-rate-vs-basis" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> funding rate vs basis</h3>
+<p><img src="finalproj_files/figure-html/fig3-1.png" width="480" /></p>
+<p>The higher funding rate accompanies a high basis. Also, as mentioned in the introduction, the value of basis is highly related to the remaining days of the contract. Even though the funding fee is extremely high at the tail of the contract, the basis would still gradually converge to zero.</p>
 </div>
-<div id="how-does-the-changes-in-market-affect-basis" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> How does the changes in market affect basis?</h2>
-<p>The basis is the decisive factor in our trading strategy. We would like to analyse the current basis from three different aspects: market emotion, calibrated basis, market volatility.</p>
-<p>Market Emotion: we use fear &amp; greed index and funding rate to represent the market emotion. Fear index are designed to quantify the market emotion, and the funding rate is also a indicator to describe traders’ sentiments, especially in derivative market.</p>
-<p>Calibrated basis: calibrated basis is calculate by basis / days remaining * 365. It is named “annual basis”. Annual basis eliminates the impact from expiration date and can be used to compare current basis with history basis.</p>
-<p>Volatility: volatility is the degree of variation of a trading price series over time. We assume when the volatility is extreme high, many position in crypto market would be liquidated which would lead to extreme basis.</p>
-<div id="funding-rate-2" class="section level3" number="5.2.1">
-<h3><span class="header-section-number">5.2.1</span> Funding Rate</h3>
-<p>We would look at how the changes affect basis in bear markets. We use the history data of “BTC contract 210924” as bear market condition and “BTC contract 210924” as
-<img src="finalproj_files/figure-html/fig3-1.png" width="480" />
-Based on two figures, the relationship between funding rate and basis can be easy observed. The higher funding rate seems accompanied with high basis. Also, as mentioned in the introduction, the value of basis is highly related to the remaining days of the contract. Thus, even though the funding fee extreme high at the tail of contract, the basis would still gradually converge to zero.</p>
-<p>However, the kind information is not that useful for trading. We also plot the basis vs the accumulation of funding rate. The accumulation of funding rate is calculated as the sum of funding rate from today until the expiration date.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-4-1.png" width="672" />
-In bull market, the accumulation of funding rate never lower than basis. However, in bear market, the accumulation of funding rate would lower than basis, especially when the price drop suddenly.</p>
-<p>Thus, we can conclude the first rule in our trading strategy. Don’t short the basis in bull market or long the basis in bear market.</p>
-<p>However, how can we quantify the current market is bull or bear? Fear index!</p>
+<div id="accumulation-of-funding-rate-vs-basis" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> accumulation of funding rate vs basis</h3>
+<p>The accumulation of funding rate is calculated as the sum of funding rate from today until the expiration date. It directly represents how much we have to pay/earn from the funding rate.
+<img src="finalproj_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+In a bull market, the accumulation of funding rate is never lower than the basis. If we keep a long position of the basis without leverage, the return would be calculated as (“accumulation_of_funding_rate” - “basis”) / 2. Thus, in the bull market, long the basis would be a wise decision. However, the sudden drop of price would lead to serious loss.</p>
 </div>
-<div id="fear-and-greed-index" class="section level3" number="5.2.2">
-<h3><span class="header-section-number">5.2.2</span> Fear and Greed index</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-5-1.png" width="672" />
-Based on two figures, the relationship between funding rate and basis can be easy observed. The higher funding rate seems accompanied with high basis. Also, as mentioned in the introduction, the value of basis is highly related to the remaining days of the contract. Thus, even though the funding fee extreme high at the tail of contract, the basis would still gradually converge to zero.</p>
-<p>However, the kind information is not that useful for trading. We also plot the basis vs the accumulation of funding rate. The accumulation of funding rate is calculated as the sum of funding rate from today until the expiration date.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>However, the correlation between fear index and basis is not that obvious due to the expiration date of contract. As mentioned in the introduction, the value of basis is highly related to the remaining days of the contract.</p>
-<p>From the Figures, we can tell that the sudden drop of the fear index would not be a</p>
-</div>
-<div id="consecutive-extreme-market-days-vs-funding-rate" class="section level3" number="5.2.3">
-<h3><span class="header-section-number">5.2.3</span> Consecutive extreme market days vs funding rate</h3>
-<p>####Consecutive Fear days vs funding rate
-<img src="figures/Result/Consecutive_fear_funding.png" width="392" />
-Not so obvious, but still can see longer days, lower funding rate</p>
-</div>
-<div id="consecutive-greed-days-vs-funding-rate" class="section level3" number="5.2.4">
-<h3><span class="header-section-number">5.2.4</span> Consecutive greed days vs funding rate</h3>
-<p><img src="figures/Result/Consecutive_greed_funding.png" width="392" /></p>
-<p>Not so obvious, but still can see longer days, larger funding rate</p>
+<div id="trading-return" class="section level3" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> Trading Return</h3>
+<p>Plotting the the basis trading return: using 2*leverage to long the basis on bear market/bull market and holding until the contract expired.
+<img src="finalproj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>The return means if you long the position in that date, you will receive % return when the contract expired.</p>
+<p>From the figures, we know that if we open the basis trading position randomly, the return highly depends on the market conditions. Because the maximum leverage in crypto market is 125, if we know the right time to enter the market, the basis trading will be very profitable.</p>
+<p>The figures above tell us don’t short the basis in bull market. Shorting basis can make profit if and only if when whole market crushed. Thus, we would pay more attention to long the basis.</p>
 </div>
 </div>
-<div id="basis" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Basis</h2>
-<p>The main idea of our trading strategy is to predict is the basis is on bottom or top. We explore basis from three different aspects: fear index, annual Basis and Volatility.</p>
-<div id="fear-index-vs-basis" class="section level3" number="5.3.1">
-<h3><span class="header-section-number">5.3.1</span> Fear index vs Basis</h3>
-<p><img src="figures/Result/200626_exp.png" width="400" /></p>
-<p><img src="figures/Result/200925_exp.png" width="400" /></p>
-<p><img src="figures/Result/201225_exp.png" width="400" /></p>
-<p><img src="figures/Result/210326_exp.png" width="400" /></p>
-<p><img src="figures/Result/volatility_histogram.png" width="392" />
-## Model:</p>
+<div id="how-does-the-market-changes-affect-the-basis-trading-return" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> How does the market changes affect the basis trading return?</h2>
+<p>The main idea of our trading strategy is to find the right time to open the basis trading position. We explore basis trading return from three different aspects: Market Emotion, History Basis and Volatility.</p>
+<div id="market-emotion" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Market emotion</h3>
+<p>Use fear-and-greed index to describe the Market emotion</p>
+<p>The fear-and-greed index was produced by analyzing the current sentiment of the Bitcoin market and crunch the numbers into a simple meter from 0 to 100. Zero means “Extreme Fear”, while 100 means “Extreme Greed”.
+#### Fear index vs Funding rate
+<img src="finalproj_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+In the figure, the x-axis is the value of fear index, the y-axis is the average funding rate group by fear index. There are more than 480 samples in data set. R-square is more 7.7 and the figure shows the strong linear relationship between fear index and funding rate.</p>
+<p>Thus, we can tell that there is strong positive correlation between fear index and funding rate.</p>
+<p>In extreme fear market(fear index &lt; 30), the average funding rate in 40 days is around 0. Thus, we will assume the funding rate is around 0 in fear market.</p>
+<div id="fear-index-vs-return-per-risk" class="section level4" number="5.2.1.1">
+<h4><span class="header-section-number">5.2.1.1</span> Fear index vs return per risk</h4>
+<p>Plotting the fear index vs return per risk</p>
+<p>Longing the basis when the current basis is positive, the known risk is the current basis and the unknown risk is the future funding rate. Based on pre_calculation, the funding rate is nearly zero in fear market. Thus, the main risk on basis trading is the basis. The pleasant time to open the position is low basis and high final return.</p>
+<p>Thus, we use return_per_risk = “final return” / “basis”, if final_return &lt; 0, then final_return = 0
+<img src="finalproj_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+The figure is not that so persuasive, but we still can see that in bull market, the lower fear index, the higher return per risk.</p>
 </div>
-<div id="run-model" class="section level3" number="5.3.2">
-<h3><span class="header-section-number">5.3.2</span> Run Model</h3>
+</div>
+<div id="volatility-vs-trading-return" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Volatility vs Trading Return</h3>
+<p>Volatility is the degree of variation of a trading price series over time. We assume when the volatility is extreme high, many position in crypto market would be liquidated which would lead to extreme basis.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+From the figure, we can see that in the bull market, lower the volatility represents higher return per risk. It appeared might because the volatility is from the sudden increase of the price.</p>
+</div>
+<div id="anuual-basis-vs-return-per-risk" class="section level3" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> Anuual basis vs return per risk</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>The annual basis seems a good estimator of the return per risk. Annual basis is calculate by ……</p>
+</div>
+</div>
+<div id="model" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Model:</h2>
+<div id="run-model" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Run Model</h3>
 <p>Base on our model, we can tell you the right point to open the position (without info leaking)</p>
 <p><img src="figures/Result/strategy_decision_200626.png" width="350" /></p>
 <p><img src="figures/Result/strategy_decision_200925.png" width="350" /></p>
