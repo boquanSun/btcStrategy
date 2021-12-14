@@ -54,3 +54,13 @@ run-model
 how-does-the-market-emotion-affect-the-funding-rate
 how-does-the-changes-in-market-affect-basis
 fear-and-greed-index
+basis-trading-return
+funding-rate-vs-basis
+accumulation-of-funding-rate-vs-basis
+trading-return
+how-does-the-market-emotion-affect-the-basis
+volaility-vs-trading-return
+section
+model
+httpsobservablehq.comboquansund3-candlestick-chart
+d3-interactive-graph-httpsobservablehq.comboquansund3-candlestick-chart
