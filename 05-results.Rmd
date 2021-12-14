@@ -6,7 +6,7 @@ library(ggplot2)
 library(png) 
 ```
 
-## Basis trading return
+## How does the basis trading return look like?
 
 Trading return is cared most. Basis trading return consists of two parts: earn/loss from funding rate, earn/loss from basis. 
 
@@ -73,7 +73,7 @@ The higher funding rate accompanies a high basis. Also, as mentioned in the intr
 
 ### accumulation of funding rate vs basis
 
-The accumulation of funding rate is calculated as the sum of funding rate from today until the expiration date. It directly represents how much we have to pay/earn for the basis
+The accumulation of funding rate is calculated as the sum of funding rate from today until the expiration date. It directly represents how much we have to pay/earn from the funding rate.
 ```{r}
 df$re_ac_funding = df$accumulation_funding_rate*100
 df2$re_ac_funding = df2$accumulation_funding_rate*100
@@ -101,12 +101,15 @@ F2 <- ggplot(df2) +
 
 multiplot(F1, F2, cols = 1)
 ```
-In bull market, the accumulation of funding rate never lower than basis. However, the sudden drop suddenly of price would led serious loss in bear market. 
+In a bull market, the accumulation of funding rate is never lower than the basis. If we keep a long position of the basis without leverage, the return would be calculated as ("accumulation_of_funding_rate" - "basis") / 2. Thus, in the bull market, long the basis would be a wise decision. However, the sudden drop of price would lead to serious loss. 
+
+
 
 ### Trading Return 
+Plotting the the basis trading return: using 2*leverage to long the basis on bear market/bull market and holding until the contract expired.
 ```{r}
 df$earned = df$accumulation_funding_rate*100 - df$basis
-df2$earned = df2$accumulation_funding_rate*100 - df$basis
+df2$earned = df2$accumulation_funding_rate*100 - df2$basis
 F1 <- ggplot(df) + 
   geom_col(aes(x = date, y = earned), size = 1, color = "red", fill = "red") +
   ylab("% return")+ ggtitle("Basis Trading Return in Bear Market")
@@ -119,15 +122,21 @@ F2 <- ggplot(df2) +
 
 multiplot(F1, F2, cols = 1)
 ```
-From the figures, we know that if we open the basis trading position randomly, the return highly depends on the market
 
+The return means if you long the position in that date, you will receive % return when the contract expired.
 
-## How does the market emotion affect the Funding Rate?
+From the figures, we know that if we open the basis trading position randomly, the return highly depends on the market conditions. Because the maximum leverage in crypto market is 125, if we know the right time to enter the market, the basis trading will be very profitable.
 
-Funding rates are periodic payments between traders to make the perpetual futures contract price is close to the index price. It is a result of market behaviors and could be used to maker some interpretation in the derivative market which also is a dominant price maker in the market. In the bull market, it have a tendency to naturally bring high funding rates with price rise. 
+The figures above tell us don't short the basis in bull market. Shorting basis can make profit if and only if when whole market crushed. Thus, we would pay more attention to long the basis. 
 
-fear-and-greed index was produced analyzing the current sentiment of the Bitcoin market and crunch the numbers into a simple meter from 0 to 100. Zero means "Extreme Fear", while 100 means "Extreme Greed".
+## How does the market changes affect the basis trading return?
+The main idea of our trading strategy is to find the right time to open the basis trading position. We explore basis trading return from three different aspects: Market Emotion, History Basis and Volatility. 
 
+### Market emotion
+Use fear-and-greed index to describe the Market emotion
+
+The fear-and-greed index was produced by analyzing the current sentiment of the Bitcoin market and crunch the numbers into a simple meter from 0 to 100. Zero means "Extreme Fear", while 100 means "Extreme Greed". 
+#### Fear index vs Funding rate
 ```{r}
 df <- read.csv('./preprocess//funding_fear.csv')
 ggplot(df, aes(x=fear, y=fundingRate)) +
@@ -135,175 +144,83 @@ ggplot(df, aes(x=fear, y=fundingRate)) +
   xlab('Fear index') + ylab("Average funding rate")
 
 ```
-In the figure, the x-axis is the value of fear index, the y-axis is the average funding rate group by fear index. There are more than 480 samples in data set. R-square is more 7.7 and the figure shows the strong linear relationship between fear index and funding rate. Thus, we can tell the strong positive correlation between fear index and funding rate. The greedy the market is, the higher funding rate would be.
+In the figure, the x-axis is the value of fear index, the y-axis is the average funding rate group by fear index. There are more than 480 samples in data set. R-square is more 7.7 and the figure shows the strong linear relationship between fear index and funding rate. 
 
+Thus, we can tell that there is strong positive correlation between fear index and funding rate.
 
-## How does the market emotion affect the basis?
+In extreme fear market(fear index < 30), the average funding rate in 40 days is around 0. Thus, we will assume the funding rate is around 0 in fear market. 
 
-### Fear and Greed index
+#### Fear index vs return per risk
+Plotting the fear index vs return per risk
 
+Longing the basis when the current basis is positive, the known risk is the current basis and the unknown risk is the future funding rate. Based on pre_calculation, the funding rate is nearly zero in fear market. Thus, the main risk on basis trading is the basis. The pleasant time to open the position is low basis and high final return.
 
+Thus, we use return_per_risk = "final return" / "basis", if final_return < 0, then final_return = 0 
 ```{r}
 df <- read.csv('./preprocess//bear_basis.csv')
 df2 <- read.csv('./preprocess//bull_basis.csv')
 df$date = as.Date(df$date)
 df2$date = as.Date(df2$date)
 df$re_fear = df$fear /10
-df2$re_fear = df2$fear /10
-F1 <- ggplot(df) + 
-  geom_line(aes(x = date, y = basis), size = 1.5, color="Black", group = 1) +
-  geom_line(aes(x = date, y = re_fear), size = 1, color='Blue') +
-  ylab("% Basis(fear 50 = basis 8%)")+ ggtitle("Bear Market") +
-  geom_text(aes(x=as.Date("2021-08-20"),y=9,label='fear Index'),color='blue') +
-  geom_text(aes(x=as.Date("2021-08-20"),y=2,label='Basis'))
+df2$re_fear = df2$fear / 10
 
+df$return = (df$accumulation_funding_rate*100 - df$basis)
+df2$return = (df2$accumulation_funding_rate*100 - df2$basis)
+df$return[df$return < 0] = 0
+df2$return[df2$return < 0] = 0
 
-F2 <- ggplot(df2) + 
-  geom_line(aes(x = date, y = basis), size = 1.5, color="Black", group = 1) +
-  geom_line(aes(x = date, y = re_fear), size = 1, color='Blue') +
-  ylab("% Basis(fear 50 = basis 8%)")+ ggtitle("Bull Market") + 
-  geom_text(aes(x=as.Date("2021-01-15"),y=10,label='fear Index'),color='blue') +
-  geom_text(aes(x=as.Date("2021-01-15"),y=2,label='Basis'))
+df$return_per_risk = (df$return*100) /  df$basis
+df2$return_per_risk = (df2$return*100) / df2$basis
+# 
+F1 <- ggplot(df) +
+  geom_point(aes(x = fear, y = return_per_risk ), size = 1) +ggtitle("Bear Market")
 
-
-multiplot(F1, F2, cols = 1)
-```
-
-### Volaility vs Trading Return 
-
-```{r}
-F1 <- ggplot(df) + 
-  geom_col(aes(x = date, y = fear / 10), size = 1, color = "red", fill = "red") +
-  geom_line(aes(x = date, y = earned), size = 1.5, color="Black", group = 1) +
-  ylab("% Basis")+ ggtitle("Bear Market") + 
-  scale_y_continuous(sec.axis = sec_axis(~./10, name = "$ earned")) +
-  theme(axis.line.y.right = element_line(color = "red"), 
-        axis.ticks.y.right = element_line(color = "red"),
-        axis.text.y.right = element_text(color = "red"), 
-        axis.title.y.right = element_text(color = "red")
-        )
-
-F2 <- ggplot(df2) + 
-  geom_col(aes(x = date, y = fear / 10), size = 1, color = "red", fill = "red") +
-  geom_line(aes(x = date, y =earned ), size = 1.5, color="Black", group = 1) +
-  ylab("% Basis")+ ggtitle("Bull Market") + 
-  scale_y_continuous(sec.axis = sec_axis(~./10, name = "% earned"))+
-  theme(axis.line.y.right = element_line(color = "red"), 
-        axis.ticks.y.right = element_line(color = "red"),
-        axis.text.y.right = element_text(color = "red"), 
-        axis.title.y.right = element_text(color = "red")
-        )
+F2 <- ggplot(df2) +
+  geom_point(aes(x = fear, y = return_per_risk ), size = 1) +ggtitle("Bull Market")
 
 multiplot(F1, F2, cols = 1)
 ```
+The figure is not that so persuasive, but we still can see that in bull market, the lower fear index, the higher return per risk. 
+
+
+### Volatility vs Trading Return
+
+Volatility is the degree of variation of a trading price series over time. We assume when the volatility is extreme high, many position in crypto market would be liquidated which would lead to extreme basis. 
 
 ```{r}
-F1 <- ggplot(df) + 
-  geom_col(aes(x = date, y = Volatility/10), size = 1, color = "red", fill = "red") +
-  geom_line(aes(x = date, y = earned), size = 1.5, color="Black", group = 1) +
-  ylab("% Basis")+ ggtitle("Bear Market") + 
-  scale_y_continuous(sec.axis = sec_axis(~./10, name = "$ Accumulated Funding Rate")) +
-  theme(axis.line.y.right = element_line(color = "red"), 
-        axis.ticks.y.right = element_line(color = "red"),
-        axis.text.y.right = element_text(color = "red"), 
-        axis.title.y.right = element_text(color = "red")
-        )
+F1 <- ggplot(df) +
+  geom_point(aes(x = Volatility, y = return_per_risk ), size = 1) +ggtitle("Bear Market")
 
-F2 <- ggplot(df2) + 
-  geom_col(aes(x = date, y = Volatility/5), size = 1, color = "red", fill = "red") +
-  geom_line(aes(x = date, y =earned ), size = 1.5, color="Black", group = 1) +
-  ylab("% Basis")+ ggtitle("Bull Market") + 
-  scale_y_continuous(sec.axis = sec_axis(~./5, name = "% Accumulated funding Rate"))+
-  theme(axis.line.y.right = element_line(color = "red"), 
-        axis.ticks.y.right = element_line(color = "red"),
-        axis.text.y.right = element_text(color = "red"), 
-        axis.title.y.right = element_text(color = "red")
-        )
+F2 <- ggplot(df2) +
+  geom_point(aes(x = Volatility, y = return_per_risk ), size = 1) +ggtitle("Bull Market")
 
 multiplot(F1, F2, cols = 1)
+
 ```
-
-### 
-
-```{r}
-ggplot() +
-   geom_histogram(data = df, 
-        aes(Volatility))
-````
-However, the correlation between fear index and basis is not that obvious due to the expiration date of contract. As mentioned in the introduction, the value of basis is highly related to the remaining days of the contract.
-
-From the Figures, we can tell that the sudden drop of the fear index would not be a 
+From the figure, we can see that in the bull market, lower the volatility represents higher return per risk. It appeared might because the volatility is from the sudden increase of the price.
 
 
-
-
-
-
-Market Emotion: we use fear & greed index and funding rate to represent the market emotion. Fear index are designed to quantify the market emotion. 
-
-Calibrated basis: calibrated basis is calculate by basis / days remaining * 365. It is named "annual basis". Annual basis eliminates the impact from expiration date and can be used to compare current basis with history basis. 
-
-Volatility: volatility is the degree of variation of a trading price series over time. We assume when the volatility is extreme high, many position in crypto market would be liquidated which would lead to extreme basis. 
-
-
-
-
-
-
-
-
-
-
-
-
-### Consecutive extreme market days vs funding rate
-
-####Consecutive Fear days vs funding rate
-```{r}
-path <- "./figures/Result/Consecutive_fear_funding.png"
-include_graphics(path)
-```
-Not so obvious, but still can see longer days, lower funding rate
-
-### Consecutive greed days vs funding rate
+### Anuual basis vs return per risk
 
 ```{r}
-path <- "./figures/Result/Consecutive_greed_funding.png"
-include_graphics(path)
-```
+F1 <- ggplot(df) +
+  geom_point(aes(x = annual_basis, y = return_per_risk ), size = 1) +ggtitle("Bear Market")
 
-Not so obvious, but still can see longer days, larger funding rate
+F2 <- ggplot(df2) +
+  geom_point(aes(x = annual_basis, y = return_per_risk ), size = 1) +ggtitle("Bull Market")
 
+multiplot(F1, F2, cols = 1)
 
-## Basis
-The main idea of our trading strategy is to predict is the basis is on bottom or top. We explore basis from three different aspects: fear index, annual Basis and Volatility. 
-
-### Fear index vs Basis
-```{r}
-path <- "./figures/Result/200626_exp.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/200925_exp.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/201225_exp.png"
-include_graphics(path)
 ```
 
 
-```{r}
-path <- "./figures/Result/210326_exp.png"
-include_graphics(path)
-```
+The annual basis seems a good estimator of the return per risk. Annual basis is calculate by ......
 
-```{r}
-path <- "./figures/Result/volatility_histogram.png"
-include_graphics(path)
-```
+
+
+
+
+
 ## Model:
 
 
