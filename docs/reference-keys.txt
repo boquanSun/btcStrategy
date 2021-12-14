@@ -64,3 +64,4 @@ fear-index-vs-return-per-risk
 volatility-vs-trading-return
 anuual-basis-vs-return-per-risk
 model
+how-does-the-basis-trading-rate-of-return-look-like

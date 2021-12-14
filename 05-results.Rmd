@@ -6,12 +6,12 @@ library(ggplot2)
 library(png) 
 ```
 
-## How does the basis trading return look like?
+## How does the basis trading rate of return look like?
 
-Trading return is cared most. Basis trading return consists of two parts: earn/loss from funding rate, earn/loss from basis. 
+Basis trading rate of return mainly consists of two parts: earn/loss from funding rate, earn/loss from basis. 
 
 
-Funding rate: as we mentioned in the introduction, funding rate is extremely important in the basis trading. The main idea of the basis trading is hedging, thus we have to open long positions and short positions at the same time. In order to add leverage, we would use the perpetual swap. Thus, the accumulation of funding rate with high leverage would be a huge number.
+Funding rate: as we mentioned in the introduction, funding rate is extremely important in the basis trading. The main idea of the basis trading is hedging, thus we have to open long positions and short positions at the same time.  We have to use the perpetual swap to add leverages, so the accumulation of funding rate with high leverage would be a large amount of money.
 
 Basis: as we mentioned in the introduction, basis is the ratio of price difference between future swap and perpetual swap. It is calculated by (future swap price - perpetual swap price) / perpetual swap price.
 
@@ -20,7 +20,7 @@ When hedging, we open long basis positions or short basis positions. There, fund
 Look at how the basis and funding rate relate under different kinds of market conditions. We defined "BTC contract 210924" as bear market condition and "BTC contract 210326" as bull market.
 
 ### funding rate vs basis
-```{r fig3, fig.width = 5, fig.asp = .62}
+```{r fig3, fig.width = 5, fig.asp = .9}
 
 library(Rmisc)
 df <- read.csv('./preprocess//bear_basis.csv')
@@ -111,12 +111,12 @@ Plotting the the basis trading return: using 2*leverage to long the basis on bea
 df$earned = df$accumulation_funding_rate*100 - df$basis
 df2$earned = df2$accumulation_funding_rate*100 - df2$basis
 F1 <- ggplot(df) + 
-  geom_col(aes(x = date, y = earned), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = earned), size = 1, color = "black") +
   ylab("% return")+ ggtitle("Basis Trading Return in Bear Market")
 
 
 F2 <- ggplot(df2) + 
-  geom_col(aes(x = date, y = earned), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = earned), size = 1, color = "black") +
   ylab("% return")+ ggtitle("Basis Trading Return in Bull Market")
  
 
@@ -202,6 +202,10 @@ From the figure, we can see that in the bull market, lower the volatility repres
 
 ### Anuual basis vs return per risk
 
+Anuual basis was designed to eliminate the effect of expiration date
+
+Anuual basis = basis / remain date * 365
+
 ```{r}
 F1 <- ggplot(df) +
   geom_point(aes(x = annual_basis, y = return_per_risk ), size = 1) +ggtitle("Bear Market")
@@ -214,40 +218,5 @@ multiplot(F1, F2, cols = 1)
 ```
 
 
-The annual basis seems a good estimator of the return per risk. Annual basis is calculate by ......
+The annual basis seems a good estimator of the return per risk. From the figure we can see, when the annual basis is very small, basis trading can get high return per risk even in bear market. 
 
-
-
-
-
-
-## Model:
-
-
-### Run Model
-Base on our model, we can tell you the right point to open the position (without info leaking)
-
-```{r}
-path <- "./figures/Result/strategy_decision_200626.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/strategy_decision_200925.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/strategy_decision_201225.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/strategy_decision_210326.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/strategy_decision_210924.png"
-include_graphics(path)
-```
