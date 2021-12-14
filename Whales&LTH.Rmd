@@ -1,0 +1,97 @@
+#Whale
+`Whale` is a cryptocurrency term that refers to individuals or entities hold a large amount of BTC. Since the number of BTC held by whales is large enough, they are considered to have the potential to manipulate currency valuations to a certain extent. As we have data recording the number of addresses holding more than 100, 1000, 10000 BTC, we try to fit a model indicating the number of BTC which belongs to whales. In this way, we can easily found whether whales tend to buy or sell bitcoitn in a period of time. We believe that such tendency stands a good chance of revealing future value of BTC in a short term. 
+
+In order to find out the variation trend of the number of whales' BTC, we firstly introduce a function to fit our data,
+$$y=a {\rm e}^{bx} + c$$
+where $y$ means the number of addresses holding more than $x$ BTC. We utilize the least squares to estimate coefficients of each day. Then, intuitively, we can get the number of BTC belonging to whales by calculating such integral,
+$$\int_{x_0}^\infty |ab| x {\rm e}^{bx} {\rm d}x$$
+where $x_0$ means the threshold BTC's number for determining whether an address is a whale.  
+
+After all these data transformation and calculating, we can explore the relation between the variation of whales' BTC and the price of BTC. We use the difference between mean value of past 7 days and mean value of past 14 days to quantify such variation, which actually showcases whether whales are buying or selling recently, and plot it with price. 
+```{r, fig.width=12}
+library(ggplot2)
+library(dplyr)
+library(Rmisc)
+
+df_whales <- read.csv('whales.csv') 
+df_whales <- df_whales %>%
+  filter(date > '2019-12-31')
+
+df_whales$date = as.Date(df_whales$date)
+df_whales$whales_change = df_whales$whales_change / 1000
+
+g1 <- ggplot(df_whales, aes(x=date, y=whales_change)) +
+  geom_line(color='aquamarine4', size=1) +
+  ggtitle('Change of BTC Held by Whales') +
+  ylab("Whales_change in 1000 BTC") + 
+  theme_grey(16)
+
+df_price <- read.csv('BTC_price.csv')
+df_price <- df_price %>%
+  filter(date > '2019-12-31') %>%
+  filter(date < '2021-11-18')
+
+df_price$date = as.Date(df_price$date)
+df_price$price = df_price$price / 1000
+
+g2 <- ggplot(df_price, aes(x=date, y=price)) +
+  geom_line(color='darkblue', size=1) + 
+  ggtitle('BTC Price') + 
+  ylab("price in 1000 US$") + 
+  theme_grey(16) + 
+
+multiplot(g1, g2, cols = 1)
+
+```
+
+Setting the threshold to 1000, that is, investors holding 1000 BTC or more are considered as whales, and we get the line chart above. As we try to make our exploration more instructive to reality, we focus data after Oct 2020, which is the most recent and the price of BTC changed fluently. As we can see, basically， the buying of whales indicates the increment of BTC price. 
+
+Let us track more detailedly At the end of 2020, whales tended to buy BTC in Oct, Nov, Dec three periods, and then the price increased consistently around the January 2021. Later, the amount of BTC held by whales increased rapidly in the middle of Jan, which is not quite common. Meanwhile, BTC price went through a long term rise, which lasted until Apr 2021. After that, several whales' buying trends in late April and early Jun both corresponded to a rise, or a stopped decline. Then, what we have to notice is the whales' buying in Jul 2021, which may not be quite large amount but still lasted for a considerable period. It could actually tell the rebound of BTC price after mid July. 
+
+At last, the number of BTC held by whales increased again after late September and late October this year. Although this may not be persuasive enough to be an evidence because we still need more time to verify, while the price does go up generally in current.
+
+#Long-term Holder
+As for long-term holders (LTH) for BTC, the supply of LTH is another essential element for analysis of BTC market. We consider BTC last active 6 months ago as BTC supply held by LTH and use line charts to study the rule of LTH's behavior and the relation between supply of LTH and the price. 
+
+```{r, fig.width=12}
+library(ggplot2)
+library(dplyr)
+library(Rmisc)
+
+df_LTH <- read.csv('LTH.csv')
+df_LTH <- df_LTH %>%
+  filter(date > '2015-12-31') %>%
+  filter(date < '2021-11-18')
+
+df_LTH$date = as.Date(df_LTH$date)
+df_LTH$long = df_LTH$long / 1000000
+
+g1 <- ggplot(df_LTH, aes(x=date, y=long)) +
+  geom_line(color='aquamarine4', size=1) +
+  ggtitle('Supply of LTH') +
+  ylab("Supply_LTH in million BTC") + 
+  theme_grey(16)
+
+df_price <- read.csv('BTC_price.csv')
+df_price <- df_price %>%
+  filter(date > '2015-12-31') %>%
+  filter(date < '2021-11-18')
+
+df_price$date = as.Date(df_price$date)
+df_price$price = df_price$price / 1000
+
+g2 <- ggplot(df_price, aes(x=date, y=price)) +
+  geom_line(color='darkblue', size=1) + 
+  ggtitle('BTC Price') + 
+  ylab("price in 1000 US$") + 
+  theme_grey(16) + 
+
+multiplot(g1, g2, cols = 1)
+
+
+```
+
+
+After plotting supply of LTH with BTC price, we can see a rule that LTH tend to start selling down the get profit soon after bull market arrives and accumulate BTC during bear market. We can clearly see such rule in the data at the end of 2017 and the start of 2018. Actually, more recently, the rule still held from  the end of 2018 to the mid of 2021. However, after that, it turns out to be different because the number of BTC held by LTH increased as BTC price rose. We assume that LTH still remain optimistic toward BTC market ar present and also, probably more and more people are inclined to be more patient and join as a LTH. 
+
+In conclusion, through observing and summarizing historical behavior of whales and long-term holders, we can understand more about the market rules better and design a better strategy 
