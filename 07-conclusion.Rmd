@@ -1,2 +1,7 @@
 # Conclusion
+## some limitation
+1. The first one is that we just came up with strategies and tested our strategy on the historical data, so we do not validate our strategies in film bargain. Therefore, our strategies should take more practical examination.
 
+## future plan
+1. Modify our good strategies and then put it on the crypto market. And then if we make some profits or suffer damage, we will change some strategy details to make some betterment.
+2. We will make a comprehensive model to contain several level indexes that indicates when to open a position time. 
