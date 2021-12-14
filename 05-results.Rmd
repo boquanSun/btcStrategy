@@ -24,7 +24,7 @@ We defined "BTC contract 210924" as bear market condition, "BTC contract 210326"
 
 
 ### funding rate vs basis
-```{r fig3, fig.width = 5, fig.asp = .9}
+```{r}
 
 library(Rmisc)
 df <- read.csv('./preprocess//bear_basis.csv')
