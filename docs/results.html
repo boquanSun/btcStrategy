@@ -118,7 +118,7 @@
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#how-does-the-basis-trading-return-look-like"><i class="fa fa-check"></i><b>5.1</b> How does the basis trading return look like?</a>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#how-does-the-basis-trading-rate-of-return-look-like"><i class="fa fa-check"></i><b>5.1</b> How does the basis trading rate of return look like?</a>
 <ul>
 <li class="chapter" data-level="5.1.1" data-path="results.html"><a href="results.html#funding-rate-vs-basis"><i class="fa fa-check"></i><b>5.1.1</b> funding rate vs basis</a></li>
 <li class="chapter" data-level="5.1.2" data-path="results.html"><a href="results.html#accumulation-of-funding-rate-vs-basis"><i class="fa fa-check"></i><b>5.1.2</b> accumulation of funding rate vs basis</a></li>
@@ -129,10 +129,6 @@
 <li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#market-emotion"><i class="fa fa-check"></i><b>5.2.1</b> Market emotion</a></li>
 <li class="chapter" data-level="5.2.2" data-path="results.html"><a href="results.html#volatility-vs-trading-return"><i class="fa fa-check"></i><b>5.2.2</b> Volatility vs Trading Return</a></li>
 <li class="chapter" data-level="5.2.3" data-path="results.html"><a href="results.html#anuual-basis-vs-return-per-risk"><i class="fa fa-check"></i><b>5.2.3</b> Anuual basis vs return per risk</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#model"><i class="fa fa-check"></i><b>5.3</b> Model:</a>
-<ul>
-<li class="chapter" data-level="5.3.1" data-path="results.html"><a href="results.html#run-model"><i class="fa fa-check"></i><b>5.3.1</b> Run Model</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -158,10 +154,10 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
-<div id="how-does-the-basis-trading-return-look-like" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> How does the basis trading return look like?</h2>
-<p>Trading return is cared most. Basis trading return consists of two parts: earn/loss from funding rate, earn/loss from basis.</p>
-<p>Funding rate: as we mentioned in the introduction, funding rate is extremely important in the basis trading. The main idea of the basis trading is hedging, thus we have to open long positions and short positions at the same time. In order to add leverage, we would use the perpetual swap. Thus, the accumulation of funding rate with high leverage would be a huge number.</p>
+<div id="how-does-the-basis-trading-rate-of-return-look-like" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> How does the basis trading rate of return look like?</h2>
+<p>Basis trading rate of return mainly consists of two parts: earn/loss from funding rate, earn/loss from basis.</p>
+<p>Funding rate: as we mentioned in the introduction, funding rate is extremely important in the basis trading. The main idea of the basis trading is hedging, thus we have to open long positions and short positions at the same time. We have to use the perpetual swap to add leverages, so the accumulation of funding rate with high leverage would be a large amount of money.</p>
 <p>Basis: as we mentioned in the introduction, basis is the ratio of price difference between future swap and perpetual swap. It is calculated by (future swap price - perpetual swap price) / perpetual swap price.</p>
 <p>When hedging, we open long basis positions or short basis positions. There, funding rates are unknown variables, but the basis is known. Long basis means we would lose money when basis is decreasing and earn money when funding rate is positive. When we have a short basis, we have to pay when the funding rate is positive but profit after the basis decreases.</p>
 <p>Look at how the basis and funding rate relate under different kinds of market conditions. We defined “BTC contract 210924” as bear market condition and “BTC contract 210326” as bull market.</p>
@@ -214,20 +210,10 @@ From the figure, we can see that in the bull market, lower the volatility repres
 </div>
 <div id="anuual-basis-vs-return-per-risk" class="section level3" number="5.2.3">
 <h3><span class="header-section-number">5.2.3</span> Anuual basis vs return per risk</h3>
+<p>Anuual basis was designed to eliminate the effect of expiration date</p>
+<p>Anuual basis = basis / remain date * 365</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>The annual basis seems a good estimator of the return per risk. Annual basis is calculate by ……</p>
-</div>
-</div>
-<div id="model" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Model:</h2>
-<div id="run-model" class="section level3" number="5.3.1">
-<h3><span class="header-section-number">5.3.1</span> Run Model</h3>
-<p>Base on our model, we can tell you the right point to open the position (without info leaking)</p>
-<p><img src="figures/Result/strategy_decision_200626.png" width="350" /></p>
-<p><img src="figures/Result/strategy_decision_200925.png" width="350" /></p>
-<p><img src="figures/Result/strategy_decision_201225.png" width="350" /></p>
-<p><img src="figures/Result/strategy_decision_210326.png" width="350" /></p>
-<p><img src="figures/Result/strategy_decision_210924.png" width="350" /></p>
+<p>The annual basis seems a good estimator of the return per risk. From the figure we can see, when the annual basis is very small, basis trading can get high return per risk even in bear market.</p>
 
 </div>
 </div>

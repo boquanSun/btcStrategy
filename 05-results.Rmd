@@ -5,22 +5,26 @@ library(knitr)
 library(ggplot2)  
 library(png) 
 ```
-
-## How does the basis trading return look like?
-
-Trading return is cared most. Basis trading return consists of two parts: earn/loss from funding rate, earn/loss from basis. 
+Basis trading rate of return mainly consists of two parts: earn/loss from funding rate, earn/loss from basis. 
 
 
-Funding rate: as we mentioned in the introduction, funding rate is extremely important in the basis trading. The main idea of the basis trading is hedging, thus we have to open long positions and short positions at the same time. In order to add leverage, we would use the perpetual swap. Thus, the accumulation of funding rate with high leverage would be a huge number.
+Funding rate: as we mentioned in the introduction, funding rate is extremely important in the basis trading. The main idea of the basis trading is hedging, thus we have to open long positions and short positions at the same time. We have to use the perpetual swap to add leverages, so the accumulation of funding rate with high leverage would be a large amount of money.
 
-Basis: as we mentioned in the introduction, basis is the ratio of price difference between future swap and perpetual swap. It is calculated by (future swap price - perpetual swap price) / perpetual swap price.
+Basis: as we mentioned in the introduction, basis is the ratio of price difference between future swap and perpetual swap. It is calculated by (future_swap_price - perpetual_swap_price) / perpetual_swap_price.
 
-When hedging, we open long basis positions or short basis positions. There, funding rates are unknown variables, but the basis is known. Long basis means we would lose money when basis is decreasing and earn money when funding rate is positive. When we have a short basis, we have to pay when the funding rate is positive but profit after the basis decreases. 
+When hedging, we will long basis or short basis. There, funding rates are unknown variables, but the basis is known. Long basis means we would lose money when basis is decreasing and earn money when funding rate is positive. When we short basis, we have to pay when the funding rate is positive but profit after the basis decreases. 
 
-Look at how the basis and funding rate relate under different kinds of market conditions. We defined "BTC contract 210924" as bear market condition and "BTC contract 210326" as bull market.
+In the results part, we would introduce how to long/short basis if you want long term hold. In the interactive, we would introduce how to long/short basis for short term hold.
+
+## How to pick the right time long/short basis?
+
+
+
+We defined "BTC contract 210924" as bear market condition, "BTC contract 210326" as bull market and ploted basis vs funding rate under different market conditions. 
+
 
 ### funding rate vs basis
-```{r fig3, fig.width = 5, fig.asp = .62}
+```{r fig3, fig.width = 5, fig.asp = .9}
 
 library(Rmisc)
 df <- read.csv('./preprocess//bear_basis.csv')
@@ -68,12 +72,15 @@ multiplot(F1, F2, cols = 1)
 ```
 
 
-The higher funding rate accompanies a high basis. Also, as mentioned in the introduction, the value of basis is highly related to the remaining days of the contract. Even though the funding fee is extremely high at the tail of the contract, the basis would still gradually converge to zero. 
+The higher funding rate accompanies a high basis. Every time the basis got a sudden drop, the funding rate would drop below 0.1%. Under extreme market condition, like May 18, accompanied with 30% drop of btc price, the funding rate turned into negative for several days. 
+
+Also, as mentioned in the introduction, the value of basis is highly related to the remaining days of the contract. Even though the funding fee is extremely high at the tail of the contract, the basis would still gradually converge to zero. 
 
 
-### accumulation of funding rate vs basis
+### Accumulation of funding rate vs basis
 
-The accumulation of funding rate is calculated as the sum of funding rate from today until the expiration date. It directly represents how much we have to pay/earn from the funding rate.
+The accumulation of funding rate is calculated as the sum of funding rate from today until the expiration date. It directly represents how much we pay/earn by the funding rate.
+
 ```{r}
 df$re_ac_funding = df$accumulation_funding_rate*100
 df2$re_ac_funding = df2$accumulation_funding_rate*100
@@ -101,38 +108,42 @@ F2 <- ggplot(df2) +
 
 multiplot(F1, F2, cols = 1)
 ```
-In a bull market, the accumulation of funding rate is never lower than the basis. If we keep a long position of the basis without leverage, the return would be calculated as ("accumulation_of_funding_rate" - "basis") / 2. Thus, in the bull market, long the basis would be a wise decision. However, the sudden drop of price would lead to serious loss. 
+In a bull market, the accumulation of funding rate is never lower than the basis. If we kept longing basis until the expiration of the contract, the return would be calculated as ("accumulation_of_funding_rate" - "basis"). Thus, in the bull market, the long term holding the basis would be a wise decision. 
+
+However, the sudden drop of price would lead to serious loss. From the figure, when market crashed in May, the long basis position will suffer huge loss. 
 
 
 
 ### Trading Return 
-Plotting the the basis trading return: using 2*leverage to long the basis on bear market/bull market and holding until the contract expired.
+
+If our trading strategy designed as using 2*leverage to long the basis on bear market/bull market and holding until the contract expired, the return ratio would look at below.
 ```{r}
 df$earned = df$accumulation_funding_rate*100 - df$basis
 df2$earned = df2$accumulation_funding_rate*100 - df2$basis
 F1 <- ggplot(df) + 
-  geom_col(aes(x = date, y = earned), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = earned), size = 1, color = "black") +
   ylab("% return")+ ggtitle("Basis Trading Return in Bear Market")
 
 
 F2 <- ggplot(df2) + 
-  geom_col(aes(x = date, y = earned), size = 1, color = "red", fill = "red") +
+  geom_line(aes(x = date, y = earned), size = 1, color = "black") +
   ylab("% return")+ ggtitle("Basis Trading Return in Bull Market")
  
 
 multiplot(F1, F2, cols = 1)
 ```
 
-The return means if you long the position in that date, you will receive % return when the contract expired.
+The return means if you long basis in that date, you will receive % return when the contract expired.
 
-From the figures, we know that if we open the basis trading position randomly, the return highly depends on the market conditions. Because the maximum leverage in crypto market is 125, if we know the right time to enter the market, the basis trading will be very profitable.
+From the figures, we know that if we want long term holding position, the return ratio highly depends on the market conditions. Because the maximum leverage in crypto market is 125, if we know the right time to enter the market, the basis trading will be very profitable.
 
-The figures above tell us don't short the basis in bull market. Shorting basis can make profit if and only if when whole market crushed. Thus, we would pay more attention to long the basis. 
+The figures above tell us don't short the basis in bull market. Shorting basis can make profit when whole market crushed, but it is not a good idea to long term holding short basis position when the basis is not so high due to accumulating of funding rate is huge. 
 
-## How does the market changes affect the basis trading return?
+## The factors affect the long term basis trading return
+
 The main idea of our trading strategy is to find the right time to open the basis trading position. We explore basis trading return from three different aspects: Market Emotion, History Basis and Volatility. 
 
-### Market emotion
+### Market Emotional
 Use fear-and-greed index to describe the Market emotion
 
 The fear-and-greed index was produced by analyzing the current sentiment of the Bitcoin market and crunch the numbers into a simple meter from 0 to 100. Zero means "Extreme Fear", while 100 means "Extreme Greed". 
@@ -144,18 +155,19 @@ ggplot(df, aes(x=fear, y=fundingRate)) +
   xlab('Fear index') + ylab("Average funding rate")
 
 ```
-In the figure, the x-axis is the value of fear index, the y-axis is the average funding rate group by fear index. There are more than 480 samples in data set. R-square is more 7.7 and the figure shows the strong linear relationship between fear index and funding rate. 
+In the figure, the x-axis is the value of fear index, the y-axis is the average funding rate group by fear index. Under more than 480 samples, the linear regression get R-square is more 7.7. Thus, we can tell that there is strong positive correlation between fear index and funding rate.
 
-Thus, we can tell that there is strong positive correlation between fear index and funding rate.
+
+
+
+#### Fear index vs Return per risk
 
 In extreme fear market(fear index < 30), the average funding rate in 40 days is around 0. Thus, we will assume the funding rate is around 0 in fear market. 
 
-#### Fear index vs return per risk
-Plotting the fear index vs return per risk
-
-Longing the basis when the current basis is positive, the known risk is the current basis and the unknown risk is the future funding rate. Based on pre_calculation, the funding rate is nearly zero in fear market. Thus, the main risk on basis trading is the basis. The pleasant time to open the position is low basis and high final return.
+The risk of long-term-holding the long basis position can be calculated. Going long basis, the known risk is the current basis and the unknown risk is the future funding rate. Based on pre-calculating, the funding rate is nearly zero in fear market. Thus, the main risk on basis trading is the basis. The pleasant time to open the position is low basis and high final return.
 
 Thus, we use return_per_risk = "final return" / "basis", if final_return < 0, then final_return = 0 
+
 ```{r}
 df <- read.csv('./preprocess//bear_basis.csv')
 df2 <- read.csv('./preprocess//bull_basis.csv')
@@ -180,7 +192,7 @@ F2 <- ggplot(df2) +
 
 multiplot(F1, F2, cols = 1)
 ```
-The figure is not that so persuasive, but we still can see that in bull market, the lower fear index, the higher return per risk. 
+The figure is not that so persuasive, but we still can see that in bull market, the lower fear index, the higher return ratio per risk. 
 
 
 ### Volatility vs Trading Return
@@ -197,10 +209,14 @@ F2 <- ggplot(df2) +
 multiplot(F1, F2, cols = 1)
 
 ```
-From the figure, we can see that in the bull market, lower the volatility represents higher return per risk. It appeared might because the volatility is from the sudden increase of the price.
+From the figure, we can see that in the bull market, lower the volatility represents higher return per risk. High Volatility in bull market might from the sudden increase of the price, then the basis would increase and then led low return per risk.
 
 
 ### Anuual basis vs return per risk
+
+Anuual basis was designed to eliminate the effect of expiration date. It is a better indicator than the original basis.
+
+Anuual basis = basis / remain date * 365
 
 ```{r}
 F1 <- ggplot(df) +
@@ -214,40 +230,7 @@ multiplot(F1, F2, cols = 1)
 ```
 
 
-The annual basis seems a good estimator of the return per risk. Annual basis is calculate by ......
+The annual basis seems a good estimator of the return per risk. From the figure we can see, the smaller annual basis is, the higher return per risk even in bear market.
 
 
 
-
-
-
-## Model:
-
-
-### Run Model
-Base on our model, we can tell you the right point to open the position (without info leaking)
-
-```{r}
-path <- "./figures/Result/strategy_decision_200626.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/strategy_decision_200925.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/strategy_decision_201225.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/strategy_decision_210326.png"
-include_graphics(path)
-```
-
-```{r}
-path <- "./figures/Result/strategy_decision_210924.png"
-include_graphics(path)
-```

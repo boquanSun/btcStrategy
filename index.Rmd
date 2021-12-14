@@ -11,7 +11,7 @@ The future markets in Cryptocurrencies are notorious for high volatility. Findin
 	
 ## What is basis?
 
-Basis is the difference between the spot price (just the coin price) of an asset and its futures price. In this project, we defined the basis as the ratio of price difference between perpetual swap and future swap. The equation of basis is B =  (F - S) / S. Here is the historic basis of ETH price between perpetual swap and future swap. From the figure below, we can see the current basis is about 2.7%
+Basis is the difference between the spot price (just the coin price) of an asset and its futures price. In this project, we defined the basis as the ratio of price difference between perpetual swap and future swap. The equation of basis is Basis = (future swap - perpetual swap)/perpetual swap. Here is the historic basis of ETH price between perpetual swap and future swap. From the figure below, we can see the current basis is about 2.7%
 ```{r}
 library(knitr)
 library(ggplot2)  
@@ -53,7 +53,7 @@ include_graphics(path)
 
 The symbol “BTCUSD Quarterly 0325” represents the future swap which would expire in 03/25/2022. The “ETHUSD perpetual” is the perpetual swap. In this time, the basis will be calculated as (49234.7 - 47991.2) / 47991.2 = 0.026%.
 
-## How to trade by basis?? Hedge!
+## How to trade by basis? Hedge
 
 It is pretty obvious that you can easily design a risk free trading strategy based on the basis. For example, you can just long the spots and short the futures.
 
@@ -79,7 +79,7 @@ It takes more than 3 month to make 1243.5 / (49234.7 + 47991.2) = 1.28% risk fre
 
 The main idea of our trading strategy is to open the position when the basis reach the bottom or top and make profit when the basis recovered to the regular level. We will trade entirely on the future market and high leverage to expand the profit. For example, if there is no funding rate, we can open the short basis position with 100 leverages and get 160% return in 3 months. However, the accumulation of funding rate needs to be considered carefully. We will lose everything if opening a position without any pre-calculate. 
 
-The good news is that our project tells you how to calculate your maxium loss, pointed out the good time to open the position, and provide backtest algorithm to verify our strategy. We also used historic price data sets and fundamental data sets to provide the insights of the basis. 
+The good news is that our project tells you how to calculate your maxium loss, pointed out the good time to open the position, and provide backtest algorithm to verify strategy. We also used historic price data sets and fundamental data sets to provide the insights of the basis. 
 
 
 

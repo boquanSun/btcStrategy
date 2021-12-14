@@ -72,7 +72,16 @@ market-emotion
 fear-index-vs-return-per-risk
 volatility-vs-trading-return
 anuual-basis-vs-return-per-risk
+<<<<<<< HEAD
 >>>>>>> 67ef5e14c6f649a656dfd2c18403017dbf117c9f
 fear-index-vs-funding-rate
 some-limitation
 future-plan
+=======
+model
+<<<<<<< HEAD
+how-does-the-basis-trading-rate-of-return-look-like
+=======
+>>>>>>> 67ef5e14c6f649a656dfd2c18403017dbf117c9f
+>>>>>>> 294adb592798308d17b82b21e9b4e59793dc24c5
+>>>>>>> 016ce3e618bca0aaabe7b44840875a4067406b29
