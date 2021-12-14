@@ -79,8 +79,19 @@ It takes more than 3 month to make 1243.5 / (49234.7 + 47991.2) = 1.28% risk fre
 
 The main idea of our trading strategy is to open the position when the basis reach the bottom or top and make profit when the basis recovered to the regular level. We will trade entirely on the future market and high leverage to expand the profit. For example, if there is no funding rate, we can open the short basis position with 100 leverages and get 160% return in 3 months. However, the accumulation of funding rate needs to be considered carefully. We will lose everything if opening a position without any pre-calculate. 
 
-The good news is that our project tells you how to calculate your maxium loss, pointed out the good time to open the position, and provide backtest algorithm to verify strategy. We also used historic price data sets and fundamental data sets to provide the insights of the basis. 
+The good news is that our project tells you how to calculate your maxium loss, pointed out the good time to open the position, and provide backtest algorithm to verify strategy. We also used historic price data sets and fundamental data sets to provide the insights. 
 
+## Fundamental Analysis on BTC long-term price 
+We would like to provide insights from two aspects:
+
+
+#### Whale
+
+is a cryptocurrency term that refers to individuals or entities hold a large amount of BTC. Since the number of BTC held by whales is large enough, they are considered to have the potential to manipulate currency valuations to a certain extent. As we have data recording the number of addresses holding more than 100, 1000, 10000 BTC, we try to fit a model indicating the number of BTC which belongs to whales. In this way, we can easily found whether whales tend to buy or sell bitcoitn in a period of time. We believe that such tendency stands a good chance of revealing future value of BTC in a short term. 
+
+
+#### Long-term Holder
+As for long-term holders (LTH) for BTC, the supply of LTH is another essential element for analysis of BTC market. We consider BTC last active 6 months ago as BTC supply held by LTH and use line charts to study the rule of LTH's behavior and the relation between supply of LTH and the price. 
 
 
 

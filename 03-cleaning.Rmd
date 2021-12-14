@@ -206,4 +206,12 @@ for (i in 1:8) {
 ```
 
 
+## Whale Accumulation
 
+  In order to find out the variation trend of the number of whales' BTC, we firstly introduce a function to fit our data,
+$$y=a {\rm e}^{bx} + c$$
+where $y$ means the number of addresses holding more than $x$ BTC. We utilize the least squares to estimate coefficients of each day. Then, intuitively, we can get the number of BTC belonging to whales by calculating such integral,
+$$\int_{x_0}^\infty |ab| x {\rm e}^{bx} {\rm d}x$$
+where $x_0$ means the threshold BTC's number for determining whether an address is a whale.  
+
+After all these data transformation and calculating, we can explore the relation between the variation of whales' BTC and the price of BTC. We use the difference between mean value of past 7 days and mean value of past 14 days to quantify such variation, which actually showcases whether whales are buying or selling recently, and plot it with price. 
